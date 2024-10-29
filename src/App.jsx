@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-import CodeEditor from "./components/Editor";
+import Menubar from "./components/Header";
+import CodeEditor from "./components/Editor"
 
 function App() {
   const [darkMode, setDarkMode] = useState(false);
@@ -15,16 +16,8 @@ function App() {
   const toggleDarkMode = () => setDarkMode(!darkMode);
 
   return (
-    <div className="flex flex-col items-center justify-center gap-2 h-screen bg-light-white dark:bg-dark-gunmetal text-light-spacegray dark:text-dark-frenchgray">
-      <div className="flex gap-4">
-        <h1 className="text-3xl font-bold">CodeTrails ;)</h1>
-        <button
-          onClick={toggleDarkMode}
-          className="bg-light-cornflowerblue hover:bg-light-azureblue dark:bg-dark-ferngreen dark:hover:bg-dark-pigmentgreen p-2 rounded"
-        >
-          Toggle Mode
-        </button>
-      </div>
+    <div className="flex flex-col h-screen bg-light-white text-light-spacegray dark:bg-dark-gunmetal dark:text-dark-frenchgray">
+      <Menubar toggleTheme={toggleDarkMode} />
       <CodeEditor theme={darkMode ? "vs-dark" : "vs"} />
     </div>
   );
