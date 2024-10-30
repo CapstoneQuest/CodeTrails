@@ -27,7 +27,7 @@ function CodeEditor({ theme, fontSize, fontLigatures, showMinimap }) {
       theme={theme}
       onMount={handleEditorDidMount}
       options={{
-        fontSize: 16,
+        fontSize: 14,
         fontFamily: "monospace",
         fontLigatures: true,
         glyphMargin: true,

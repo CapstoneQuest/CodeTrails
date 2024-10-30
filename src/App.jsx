@@ -5,6 +5,8 @@ import CodeEditor from "./components/Editor"
 function App() {
   const [darkMode, setDarkMode] = useState(false);
 
+  const [fontsize, setFontSize] = useState(14);
+
   useEffect(() => {
     if (darkMode) {
       document.documentElement.classList.add("dark");
@@ -17,8 +19,8 @@ function App() {
 
   return (
     <div className="flex flex-col h-screen bg-light-white text-light-spacegray dark:bg-dark-gunmetal dark:text-dark-frenchgray">
-      <Menubar toggleTheme={toggleDarkMode} />
-      <CodeEditor theme={darkMode ? "vs-dark" : "vs"} />
+      <Menubar toggleTheme={toggleDarkMode} setFontSize={setFontSize} />
+      <CodeEditor theme={darkMode ? "vs-dark" : "vs"} fontSize={fontsize} />
     </div>
   );
 }
