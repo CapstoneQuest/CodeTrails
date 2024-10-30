@@ -12,19 +12,20 @@ function CodeEditor({ theme, fontSize, fontLigatures, showMinimap }) {
   useEffect(() => {
     if (editorRef.current) {
       editorRef.current.updateOptions({
+        theme: theme,
         fontSize,
         fontLigatures,
         minimap: { enabled: showMinimap },
       });
     }
-  }, [fontSize, fontLigatures, showMinimap]);
+  }, [theme, fontSize, fontLigatures, showMinimap]);
 
   return (
     <Editor
       width="100%"
       height="100vh"
       defaultLanguage="cpp"
-      theme={theme}
+      theme="vs"
       onMount={handleEditorDidMount}
       options={{
         fontSize: 14,
