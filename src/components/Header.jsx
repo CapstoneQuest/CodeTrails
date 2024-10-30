@@ -3,8 +3,15 @@ import * as Toolbar from "@radix-ui/react-toolbar";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import { useState } from "react";
 
-const Menubar = ({ toggleTheme, setFontSize }) => {
+const Menubar = ({ changeTheme, setFontSize }) => {
+  const [activeTheme, setActiveTheme] = useState("light");
+
   const [activeFontSize, setActiveFontSize] = useState("14");
+
+  const switchTheme = (theme) => {
+    setActiveTheme(theme);
+    changeTheme(theme);
+  };
 
   const changeFontSize = (size) => {
     setActiveFontSize(size.toString());
@@ -48,8 +55,8 @@ const Menubar = ({ toggleTheme, setFontSize }) => {
       </div>
 
       {/* :::::::::::: MYSTERY BAR :::::::::::: */}
-      <div className="mx-64 flex h-auto flex-grow cursor-progress items-center justify-center rounded-xl border-2 border-light-platinum py-1 text-center text-xs text-light-spacegray dark:border-dark-charcoal dark:text-dark-frenchgray lg:mx-20 xl:mx-20 2xl:mx-72">
-        <span onClick={toggleTheme}>CODE TRAILS</span>
+      <div className="mx-64 flex h-auto flex-grow cursor-pointer items-center justify-center rounded-xl border-2 border-light-platinum py-1 text-center text-xs text-light-spacegray dark:border-dark-charcoal dark:text-dark-frenchgray lg:mx-20 xl:mx-20 2xl:mx-72">
+        <span>CODE TRAILS</span>
       </div>
 
       {/* :::::::::::: DOWNLOAD AND UPLOAD BUTTONS :::::::::::: */}
@@ -112,7 +119,9 @@ const Menubar = ({ toggleTheme, setFontSize }) => {
                 <DropdownMenu.SubContent className="min-w-36 rounded-md border border-light-spacegray bg-light-white p-[5px] dark:border-dark-frenchgray dark:bg-dark-gunmetal">
                   <DropdownMenu.RadioGroup
                     value={activeFontSize}
-                    onValueChange={(value) => changeFontSize(parseInt(value, 10))}
+                    onValueChange={(value) =>
+                      changeFontSize(parseInt(value, 10))
+                    }
                   >
                     <DropdownMenu.RadioItem
                       className="flex h-auto select-none items-center rounded-md py-1 pl-4 pr-2 text-sm text-light-spacegray data-[highlighted]:bg-light-cornflowerblue data-[highlighted]:text-light-white dark:text-dark-frenchgray dark:data-[highlighted]:bg-dark-ferngreen dark:data-[highlighted]:text-dark-frenchgray"
@@ -228,12 +237,55 @@ const Menubar = ({ toggleTheme, setFontSize }) => {
               </DropdownMenu.SubTrigger>
               <DropdownMenu.Portal>
                 <DropdownMenu.SubContent className="min-w-36 rounded-md border border-light-spacegray bg-light-white p-[5px] dark:border-dark-frenchgray dark:bg-dark-gunmetal">
-                  <DropdownMenu.Item className="flex h-auto select-none items-center rounded-md py-1 pl-4 pr-2 text-sm text-light-spacegray data-[highlighted]:bg-light-cornflowerblue data-[highlighted]:text-light-white dark:text-dark-frenchgray dark:data-[highlighted]:bg-dark-ferngreen dark:data-[highlighted]:text-dark-frenchgray">
-                    Light
-                  </DropdownMenu.Item>
-                  <DropdownMenu.Item className="flex h-auto select-none items-center rounded-md py-1 pl-4 pr-2 text-sm text-light-spacegray data-[highlighted]:bg-light-cornflowerblue data-[highlighted]:text-light-white dark:text-dark-frenchgray dark:data-[highlighted]:bg-dark-ferngreen dark:data-[highlighted]:text-dark-frenchgray">
-                    Dark
-                  </DropdownMenu.Item>
+                  <DropdownMenu.RadioGroup
+                    value={activeTheme}
+                    onValueChange={(value) => switchTheme(value)}
+                  >
+                    <DropdownMenu.RadioItem
+                      className="flex h-auto select-none items-center rounded-md py-1 pl-4 pr-2 text-sm text-light-spacegray data-[highlighted]:bg-light-cornflowerblue data-[highlighted]:text-light-white dark:text-dark-frenchgray dark:data-[highlighted]:bg-dark-ferngreen dark:data-[highlighted]:text-dark-frenchgray"
+                      value="light"
+                    >
+                      <DropdownMenu.ItemIndicator className="absolute left-0 inline-flex w-6 items-center justify-center">
+                        <svg
+                          width="15"
+                          height="15"
+                          viewBox="0 0 15 15"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M11.4669 3.72684C11.7558 3.91574 11.8369 4.30308 11.648 4.59198L7.39799 11.092C7.29783 11.2452 7.13556 11.3467 6.95402 11.3699C6.77247 11.3931 6.58989 11.3355 6.45446 11.2124L3.70446 8.71241C3.44905 8.48022 3.43023 8.08494 3.66242 7.82953C3.89461 7.57412 4.28989 7.55529 4.5453 7.78749L6.75292 9.79441L10.6018 3.90792C10.7907 3.61902 11.178 3.53795 11.4669 3.72684Z"
+                            fill="currentColor"
+                            fillRule="evenodd"
+                            clipRule="evenodd"
+                          ></path>
+                        </svg>
+                      </DropdownMenu.ItemIndicator>
+                      Light
+                    </DropdownMenu.RadioItem>
+                    <DropdownMenu.RadioItem
+                      className="flex h-auto select-none items-center rounded-md py-1 pl-4 pr-2 text-sm text-light-spacegray data-[highlighted]:bg-light-cornflowerblue data-[highlighted]:text-light-white dark:text-dark-frenchgray dark:data-[highlighted]:bg-dark-ferngreen dark:data-[highlighted]:text-dark-frenchgray"
+                      value="dark"
+                    >
+                      <DropdownMenu.ItemIndicator className="absolute left-0 inline-flex w-6 items-center justify-center">
+                        <svg
+                          width="15"
+                          height="15"
+                          viewBox="0 0 15 15"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M11.4669 3.72684C11.7558 3.91574 11.8369 4.30308 11.648 4.59198L7.39799 11.092C7.29783 11.2452 7.13556 11.3467 6.95402 11.3699C6.77247 11.3931 6.58989 11.3355 6.45446 11.2124L3.70446 8.71241C3.44905 8.48022 3.43023 8.08494 3.66242 7.82953C3.89461 7.57412 4.28989 7.55529 4.5453 7.78749L6.75292 9.79441L10.6018 3.90792C10.7907 3.61902 11.178 3.53795 11.4669 3.72684Z"
+                            fill="currentColor"
+                            fillRule="evenodd"
+                            clipRule="evenodd"
+                          ></path>
+                        </svg>
+                      </DropdownMenu.ItemIndicator>
+                      Dark
+                    </DropdownMenu.RadioItem>
+                  </DropdownMenu.RadioGroup>
                 </DropdownMenu.SubContent>
               </DropdownMenu.Portal>
             </DropdownMenu.Sub>
