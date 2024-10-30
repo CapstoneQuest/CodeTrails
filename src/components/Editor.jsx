@@ -30,14 +30,14 @@ function CodeEditor({ theme, fontSize, fontLigatures, showMinimap }) {
       options={{
         fontSize: 14,
         fontFamily: "monospace",
-        fontLigatures: true,
+        fontLigatures: false,
         glyphMargin: true,
         cursorStyle: "line-thin",
         cursorBlinking: "phase",
         mouseWheelZoom: true,
         showUnused: true,
         minimap: {
-          enabled: false,
+          enabled: true,
         },
         scrollbar: {
           verticalScrollbarSize: 10,

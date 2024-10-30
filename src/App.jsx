@@ -6,6 +6,8 @@ function App() {
   const [theme, setTheme] = useState("light");
 
   const [fontsize, setFontSize] = useState(14);
+  const [showMinimap, setShowMinimap] = useState(true);
+  const [fontLigatures, setFontLigatures] = useState(false);
 
   useEffect(() => {
     if (theme === "dark") {
@@ -17,8 +19,8 @@ function App() {
 
   return (
     <div className="flex h-screen flex-col bg-light-white text-light-spacegray dark:bg-dark-gunmetal dark:text-dark-frenchgray">
-      <Menubar changeTheme={setTheme} setFontSize={setFontSize} />
-      <CodeEditor theme={theme === "dark" ? "vs-dark" : "vs"} fontSize={fontsize} />
+      <Menubar changeTheme={setTheme} setFontSize={setFontSize} setFontLigatures={setFontLigatures} setMinimap={setShowMinimap}/>
+      <CodeEditor theme={theme === "dark" ? "vs-dark" : "vs"} fontSize={fontsize} fontLigatures={fontLigatures} showMinimap={showMinimap}/>
     </div>
   );
 }
