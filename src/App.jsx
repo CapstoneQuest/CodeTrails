@@ -10,6 +10,8 @@ function App() {
   const [showMinimap, setShowMinimap] = useState(true);
   const [fontLigatures, setFontLigatures] = useState(false);
 
+  const [showOutputPanel, setShowOutputPanel] = useState(true);
+
   useEffect(() => {
     if (theme === "dark") {
       document.documentElement.classList.add("dark");
@@ -20,9 +22,22 @@ function App() {
 
   return (
     <div className="flex h-screen flex-col bg-light-white text-light-spacegray dark:bg-dark-gunmetal dark:text-dark-frenchgray">
-      <Menubar changeTheme={setTheme} setFontSize={setFontSize} setFontLigatures={setFontLigatures} setMinimap={setShowMinimap}/>
-      <CodeEditor theme={theme === "dark" ? "vs-dark" : "vs"} fontSize={fontsize} fontLigatures={fontLigatures} showMinimap={showMinimap}/>
-      <OutputPanel />
+      <Menubar
+        changeTheme={setTheme}
+        setFontSize={setFontSize}
+        setFontLigatures={setFontLigatures}
+        setMinimap={setShowMinimap}
+      />
+      <CodeEditor
+        theme={theme === "dark" ? "vs-dark" : "vs"}
+        fontSize={fontsize}
+        fontLigatures={fontLigatures}
+        showMinimap={showMinimap}
+        showOutputPanel={showOutputPanel}
+      />
+      {showOutputPanel && (
+        <OutputPanel setShowOutputPanel={setShowOutputPanel} />
+      )}
     </div>
   );
 }
