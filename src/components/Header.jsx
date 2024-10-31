@@ -39,7 +39,7 @@ const Menubar = ({
   };
 
   return (
-    <Toolbar.Root className="flex w-full flex-nowrap border-b border-light-platinum bg-light-white p-2 pl-4 text-lg dark:border-dark-charcoal dark:bg-dark-gunmetal lg:text-xs xl:text-xs 2xl:text-sm">
+    <Toolbar.Root className="flex w-full flex-nowrap border-b border-light-platinum bg-light-white p-2 px-4 text-lg dark:border-dark-charcoal dark:bg-dark-gunmetal lg:text-xs xl:text-xs 2xl:text-sm">
       {/* :::::::::::: LOGO :::::::::::: */}
       <Toolbar.Link
         className="flex-basis-auto flex-shrink-0 flex-grow-0"

@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import Menubar from "./components/Header";
 import CodeEditor from "./components/Editor";
+import OutputPanel from "./components/OutputPanel";
 
 function App() {
   const [theme, setTheme] = useState("light");
@@ -21,6 +22,7 @@ function App() {
     <div className="flex h-screen flex-col bg-light-white text-light-spacegray dark:bg-dark-gunmetal dark:text-dark-frenchgray">
       <Menubar changeTheme={setTheme} setFontSize={setFontSize} setFontLigatures={setFontLigatures} setMinimap={setShowMinimap}/>
       <CodeEditor theme={theme === "dark" ? "vs-dark" : "vs"} fontSize={fontsize} fontLigatures={fontLigatures} showMinimap={showMinimap}/>
+      <OutputPanel />
     </div>
   );
 }
