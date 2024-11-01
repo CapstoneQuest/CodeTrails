@@ -49,7 +49,7 @@ function CodeEditor({
         onChange={handleEditorOnChange}
         options={{
           fontSize: 14,
-          fontFamily: "monospace",
+          fontFamily: "Geist Mono",
           fontLigatures: false,
           glyphMargin: true,
           cursorStyle: "line-thin",

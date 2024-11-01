@@ -42,7 +42,9 @@ const OutputPanel = ({ setShowOutputPanel, outputContent }) => {
       </div>
       <ScrollArea.Root className="size-full overflow-hidden border-b border-b-light-platinum bg-light-white px-4 dark:border-b-dark-charcoal dark:bg-dark-gunmetal">
         <ScrollArea.Viewport className="size-full">
-          <div className="whitespace-pre-wrap px-5 py-[15px]">
+          <div
+            className={`${outContent.exit_code !== 0 ? "text-red-600" : ""} whitespace-pre-wrap p-5 font-mono`}
+          >
             {outContent.exit_code === 0 ? outContent.stdout : outContent.stderr}
           </div>
         </ScrollArea.Viewport>

@@ -68,17 +68,17 @@ const Menubar = ({
       <div className="flex gap-2 lg:gap-3">
         <Toolbar.Button
           onClick={doCompile}
-          className="h-auto flex-shrink-0 flex-grow-0 items-center justify-center rounded-full bg-light-azureblue px-2.5 text-white hover:bg-light-cornflowerblue dark:bg-dark-ferngreen dark:hover:bg-dark-pigmentgreen lg:px-3 xl:px-4 2xl:px-5"
+          className="h-auto flex-shrink-0 flex-grow-0 items-center justify-center rounded-full bg-light-azureblue px-2.5 font-mono text-white hover:bg-light-cornflowerblue dark:bg-dark-ferngreen dark:hover:bg-dark-pigmentgreen lg:px-3 xl:px-4 2xl:px-5"
         >
           Compile & Run
         </Toolbar.Button>
-        <Toolbar.Button className="h-auto flex-shrink-0 flex-grow-0 items-center justify-center rounded-full bg-light-azureblue px-2.5 text-white hover:bg-light-cornflowerblue dark:bg-dark-ferngreen dark:hover:bg-dark-pigmentgreen lg:px-3 xl:px-4 2xl:px-5">
+        <Toolbar.Button className="h-auto flex-shrink-0 flex-grow-0 items-center justify-center rounded-full bg-light-azureblue px-2.5 font-mono text-white hover:bg-light-cornflowerblue dark:bg-dark-ferngreen dark:hover:bg-dark-pigmentgreen lg:px-3 xl:px-4 2xl:px-5">
           Visualize
         </Toolbar.Button>
       </div>
 
       {/* :::::::::::: MYSTERY BAR :::::::::::: */}
-      <div className="mx-64 flex h-auto flex-grow cursor-pointer items-center justify-center rounded-xl border-2 border-light-platinum py-1 text-center text-xs text-light-spacegray dark:border-dark-charcoal dark:text-dark-frenchgray lg:mx-20 xl:mx-20 2xl:mx-72">
+      <div className="mx-64 flex h-auto flex-grow cursor-pointer items-center justify-center rounded-xl border-2 border-light-platinum py-1 text-center font-mono text-xs text-light-spacegray dark:border-dark-charcoal dark:text-dark-frenchgray lg:mx-20 xl:mx-20 2xl:mx-72">
         <span>CODE TRAILS</span>
       </div>
 
