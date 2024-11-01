@@ -1,17 +1,27 @@
 /* eslint-disable react/prop-types */
 import * as ScrollArea from "@radix-ui/react-scroll-area";
 
-const TAGS = Array.from({ length: 15 }).map(
-  (_, i, a) => `v1.2.0-beta.${a.length - i}`,
-);
+const OutputPanel = ({ setShowOutputPanel, outputContent }) => {
+  const [outContent, setOutContent] = outputContent;
 
-const OutputPanel = ({ setShowOutputPanel }) => {
+  function closeAndResetPanel() {
+    setShowOutputPanel(false);
+
+    setOutContent({
+      stdout: null,
+      stderr: null,
+      exit_code: null,
+      status: null,
+      time: null,
+    });
+  }
+
   return (
     <div className="flex-shrink-1 h-1/2 w-full overflow-hidden">
       <div className="flex justify-between border-b border-b-light-platinum px-4 py-1 text-light-cornflowerblue dark:border-b-dark-charcoal dark:text-dark-pigmentgreen">
         <span className="text-xl font-bold">Output</span>
         <button
-          onClick={() => setShowOutputPanel(false)}
+          onClick={closeAndResetPanel}
           className="inline-flex h-auto items-center justify-center rounded-full bg-transparent px-4 hover:bg-light-cornflowerblue hover:text-light-white hover:outline-0 dark:hover:bg-dark-pigmentgreen"
         >
           <svg
@@ -32,18 +42,8 @@ const OutputPanel = ({ setShowOutputPanel }) => {
       </div>
       <ScrollArea.Root className="size-full overflow-hidden border-b border-b-light-platinum bg-light-white px-4 dark:border-b-dark-charcoal dark:bg-dark-gunmetal">
         <ScrollArea.Viewport className="size-full">
-          <div className="px-5 py-[15px]">
-            <div className="text-violet11 text-[15px] font-medium leading-[18px]">
-              Tags
-            </div>
-            {TAGS.map((tag) => (
-              <div
-                className="border-t-mauve6 text-mauve12 mt-2.5 border-t pt-2.5 text-[13px] leading-[18px]"
-                key={tag}
-              >
-                {tag}
-              </div>
-            ))}
+          <div className="whitespace-pre-wrap px-5 py-[15px]">
+            {outContent.exit_code === 0 ? outContent.stdout : outContent.stderr}
           </div>
         </ScrollArea.Viewport>
         <ScrollArea.Scrollbar
