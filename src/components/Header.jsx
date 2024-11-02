@@ -10,6 +10,7 @@ const Menubar = ({
   setMinimap,
   doCompile,
   doVisualize,
+  doDownload,
 }) => {
   const [activeTheme, setActiveTheme] = useState("light");
 
@@ -88,7 +89,10 @@ const Menubar = ({
 
       {/* :::::::::::: DOWNLOAD AND UPLOAD BUTTONS :::::::::::: */}
       <div className="flex gap-0 lg:gap-0">
-        <Toolbar.Button className="inline-flex h-auto flex-shrink-0 flex-grow-0 basis-auto items-center justify-center rounded-full rounded-r-none border border-light-platinum bg-light-azureblue px-2.5 text-white hover:bg-light-cornflowerblue dark:border-dark-charcoal dark:bg-dark-ferngreen dark:hover:bg-dark-pigmentgreen lg:px-3 xl:px-4 2xl:px-5">
+        <Toolbar.Button
+          onClick={doDownload}
+          className="inline-flex h-auto flex-shrink-0 flex-grow-0 basis-auto items-center justify-center rounded-full rounded-r-none border border-light-platinum bg-light-azureblue px-2.5 text-white hover:bg-light-cornflowerblue dark:border-dark-charcoal dark:bg-dark-ferngreen dark:hover:bg-dark-pigmentgreen lg:px-3 xl:px-4 2xl:px-5"
+        >
           <svg
             width="15"
             height="15"

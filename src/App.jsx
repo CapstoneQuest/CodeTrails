@@ -1,9 +1,10 @@
-import { useState, useEffect } from "react";
-import Menubar from "./components/Header";
+import { saveAs } from "file-saver";
+import { useEffect, useState } from "react";
 import CodeEditor from "./components/Editor";
+import Menubar from "./components/Header";
 import OutputPanel from "./components/OutputPanel";
-import api from "./utils/apiConfig";
 import RenderPanel from "./components/RenderPanel";
+import api from "./utils/apiConfig";
 
 function App() {
   const [theme, setTheme] = useState("light");
@@ -13,7 +14,6 @@ function App() {
   const [fontLigatures, setFontLigatures] = useState(false);
 
   const [activePanel, setActivePanel] = useState(null);
-  console.log(activePanel)
 
   const [sourceCode, setSourceCode] = useState("//Welcome to CodeTrails!");
   const [compileResult, setCompileResult] = useState({});
@@ -39,6 +39,13 @@ function App() {
     setActivePanel("render");
   }
 
+  function handleDownloadRequest() {
+    api
+      .post("/download", { sourceCode: sourceCode }, { responseType: "blob" })
+      .then((response) => saveAs(response.data, "main.cpp"))
+      .catch((error) => console.error("Error fetching data:", error));
+  }
+
   return (
     <div className="flex h-screen flex-col bg-light-white text-light-spacegray dark:bg-dark-gunmetal dark:text-dark-frenchgray">
       <Menubar
@@ -48,8 +55,11 @@ function App() {
         setMinimap={setShowMinimap}
         doCompile={handleCompileRequest}
         doVisualize={handleVisualizeRequest}
+        doDownload={handleDownloadRequest}
       />
-      <div className={`flex flex-grow ${activePanel === "output" ? "flex-col" : "flex-row"}`}>
+      <div
+        className={`flex flex-grow ${activePanel === "output" ? "flex-col" : "flex-row"}`}
+      >
         <CodeEditor
           theme={theme === "dark" ? "vs-dark" : "vs"}
           fontSize={fontsize}
