@@ -1,5 +1,5 @@
 import { saveAs } from "file-saver";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import CodeEditor from "./components/Editor";
 import Menubar from "./components/Header";
 import OutputPanel from "./components/OutputPanel";
@@ -17,6 +17,9 @@ function App() {
 
   const [sourceCode, setSourceCode] = useState("//Welcome to CodeTrails!");
   const [compileResult, setCompileResult] = useState({});
+  const [uploadResult, setUploadResult] = useState({});
+
+  const fileInputRef = useRef(null);
 
   useEffect(() => {
     if (theme === "dark") {
@@ -24,7 +27,9 @@ function App() {
     } else if (theme === "light") {
       document.documentElement.classList.remove("dark");
     }
-  }, [theme]);
+
+    setSourceCode(uploadResult.source_code)
+  }, [theme, uploadResult]);
 
   function handleCompileRequest() {
     api
@@ -46,6 +51,27 @@ function App() {
       .catch((error) => console.error("Error fetching data:", error));
   }
 
+  function handleUploadRequest() {
+    fileInputRef.current.click();
+  }
+
+  function uploadFile(event) {
+    const file = event.target.files[0];
+    if (!file) {
+      console.error("No file selected");
+    }
+
+    const formData = new FormData();
+    formData.append("file", file);
+
+    api
+      .post("/upload", formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      })
+      .then((response) => setUploadResult(response.data))
+      .catch((error) => console.error("Error fetching data:", error));
+  }
+
   return (
     <div className="flex h-screen flex-col bg-light-white text-light-spacegray dark:bg-dark-gunmetal dark:text-dark-frenchgray">
       <Menubar
@@ -56,6 +82,14 @@ function App() {
         doCompile={handleCompileRequest}
         doVisualize={handleVisualizeRequest}
         doDownload={handleDownloadRequest}
+        doUpload={handleUploadRequest}
+      />
+      <input
+        type="file"
+        accept=".cpp"
+        className="hidden"
+        ref={fileInputRef}
+        onChange={uploadFile}
       />
       <div
         className={`flex flex-grow ${activePanel === "output" ? "flex-col" : "flex-row"}`}
@@ -66,7 +100,7 @@ function App() {
           fontLigatures={fontLigatures}
           showMinimap={showMinimap}
           activePanel={activePanel}
-          setSourceCode={setSourceCode}
+          sourceCode={[sourceCode, setSourceCode]}
         />
         {activePanel === "output" && (
           <OutputPanel

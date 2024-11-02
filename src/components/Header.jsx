@@ -11,6 +11,7 @@ const Menubar = ({
   doCompile,
   doVisualize,
   doDownload,
+  doUpload,
 }) => {
   const [activeTheme, setActiveTheme] = useState("light");
 
@@ -108,7 +109,10 @@ const Menubar = ({
             ></path>
           </svg>
         </Toolbar.Button>
-        <Toolbar.Button className="inline-flex h-auto flex-shrink-0 flex-grow-0 basis-auto items-center justify-center rounded-full rounded-l-none border border-light-platinum bg-light-azureblue px-2.5 text-white hover:bg-light-cornflowerblue dark:border-dark-charcoal dark:bg-dark-ferngreen dark:hover:bg-dark-pigmentgreen lg:px-3 xl:px-4 2xl:px-5">
+        <Toolbar.Button
+          onClick={doUpload}
+          className="inline-flex h-auto flex-shrink-0 flex-grow-0 basis-auto items-center justify-center rounded-full rounded-l-none border border-light-platinum bg-light-azureblue px-2.5 text-white hover:bg-light-cornflowerblue dark:border-dark-charcoal dark:bg-dark-ferngreen dark:hover:bg-dark-pigmentgreen lg:px-3 xl:px-4 2xl:px-5"
+        >
           <svg
             width="15"
             height="15"

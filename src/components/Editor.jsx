@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { Editor } from "@monaco-editor/react";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 
 function CodeEditor({
   theme,
@@ -8,26 +8,25 @@ function CodeEditor({
   fontLigatures,
   showMinimap,
   activePanel,
-  setSourceCode,
+  sourceCode,
 }) {
   const editorRef = useRef(null);
 
-  const [editorValue, setEditorValue] = useState("//Welcome to CodeTrails!");
+  const [editorValue, setEditorValue] = sourceCode;
 
   function handleEditorDidMount(editor) {
     editorRef.current = editor;
+    editor.getModel().setValue(editorValue);
   }
 
   function handleEditorOnChange(value) {
     setEditorValue(value);
-
-    setSourceCode(value);
   }
 
   useEffect(() => {
     if (editorRef.current) {
       editorRef.current.updateOptions({
-        theme: theme,
+        theme,
         fontSize,
         fontLigatures,
         minimap: { enabled: showMinimap },
