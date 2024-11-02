@@ -3,6 +3,7 @@ import Menubar from "./components/Header";
 import CodeEditor from "./components/Editor";
 import OutputPanel from "./components/OutputPanel";
 import api from "./utils/apiConfig";
+import RenderPanel from "./components/RenderPanel";
 
 function App() {
   const [theme, setTheme] = useState("light");
@@ -12,6 +13,7 @@ function App() {
   const [fontLigatures, setFontLigatures] = useState(false);
 
   const [showOutputPanel, setShowOutputPanel] = useState(false);
+  const [showRenderPanel, setShowRenderPanel] = useState(false);
 
   const [sourceCode, setSourceCode] = useState("//Welcome to CodeTrails!");
   const [compileResult, setCompileResult] = useState({});
@@ -33,6 +35,10 @@ function App() {
     setShowOutputPanel(true);
   }
 
+  function handleVisualizeRequest() {
+    setShowRenderPanel(true);
+  }
+
   return (
     <div className="flex h-screen flex-col bg-light-white text-light-spacegray dark:bg-dark-gunmetal dark:text-dark-frenchgray">
       <Menubar
@@ -41,15 +47,22 @@ function App() {
         setFontLigatures={setFontLigatures}
         setMinimap={setShowMinimap}
         doCompile={handleCompileRequest}
+        doVisualize={handleVisualizeRequest}
       />
-      <CodeEditor
-        theme={theme === "dark" ? "vs-dark" : "vs"}
-        fontSize={fontsize}
-        fontLigatures={fontLigatures}
-        showMinimap={showMinimap}
-        showOutputPanel={showOutputPanel}
-        setSourceCode={setSourceCode}
-      />
+      <div className="flex flex-grow flex-row">
+        <CodeEditor
+          theme={theme === "dark" ? "vs-dark" : "vs"}
+          fontSize={fontsize}
+          fontLigatures={fontLigatures}
+          showMinimap={showMinimap}
+          showOutputPanel={showOutputPanel}
+          showRenderPanel={showRenderPanel}
+          setSourceCode={setSourceCode}
+        />
+        {showRenderPanel && (
+          <RenderPanel setShowRenderPanel={setShowRenderPanel} />
+        )}
+      </div>
       {showOutputPanel && (
         <OutputPanel
           setShowOutputPanel={setShowOutputPanel}

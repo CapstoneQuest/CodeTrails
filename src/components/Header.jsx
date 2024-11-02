@@ -9,6 +9,7 @@ const Menubar = ({
   setFontLigatures,
   setMinimap,
   doCompile,
+  doVisualize,
 }) => {
   const [activeTheme, setActiveTheme] = useState("light");
 
@@ -72,7 +73,10 @@ const Menubar = ({
         >
           Compile & Run
         </Toolbar.Button>
-        <Toolbar.Button className="h-auto flex-shrink-0 flex-grow-0 items-center justify-center rounded-full bg-light-azureblue px-2.5 font-mono text-white hover:bg-light-cornflowerblue dark:bg-dark-ferngreen dark:hover:bg-dark-pigmentgreen lg:px-3 xl:px-4 2xl:px-5">
+        <Toolbar.Button
+          onClick={doVisualize}
+          className="h-auto flex-shrink-0 flex-grow-0 items-center justify-center rounded-full bg-light-azureblue px-2.5 font-mono text-white hover:bg-light-cornflowerblue dark:bg-dark-ferngreen dark:hover:bg-dark-pigmentgreen lg:px-3 xl:px-4 2xl:px-5"
+        >
           Visualize
         </Toolbar.Button>
       </div>
