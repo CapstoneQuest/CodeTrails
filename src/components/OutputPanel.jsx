@@ -1,11 +1,11 @@
 /* eslint-disable react/prop-types */
 import * as ScrollArea from "@radix-ui/react-scroll-area";
 
-const OutputPanel = ({ setShowOutputPanel, outputContent }) => {
+const OutputPanel = ({ closePanel, outputContent }) => {
   const [outContent, setOutContent] = outputContent;
 
   function closeAndResetPanel() {
-    setShowOutputPanel(false);
+    closePanel(null);
 
     setOutContent({
       stdout: null,

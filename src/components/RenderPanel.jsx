@@ -1,13 +1,13 @@
 /* eslint-disable react/prop-types */
 import * as ScrollArea from "@radix-ui/react-scroll-area";
 
-const RenderPanel = ({ setShowRenderPanel }) => {
+const RenderPanel = ({ closePanel }) => {
   return (
     <div className="flex-shrink-1 h-full w-1/2 overflow-hidden border-b border-l border-b-light-platinum border-l-light-platinum dark:border-b-dark-charcoal dark:border-l-dark-charcoal">
       <div className="flex justify-between border-b border-b-light-platinum px-4 py-1 text-light-cornflowerblue dark:border-b-dark-charcoal dark:text-dark-pigmentgreen">
         <span className="text-xl font-bold">Visualization</span>
         <button
-          onClick={() => setShowRenderPanel(false)}
+          onClick={() => closePanel(null)}
           className="inline-flex h-auto items-center justify-center rounded-full bg-transparent px-4 hover:bg-light-cornflowerblue hover:text-light-white hover:outline-0 dark:hover:bg-dark-pigmentgreen"
         >
           <svg

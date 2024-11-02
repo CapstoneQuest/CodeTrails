@@ -12,8 +12,8 @@ function App() {
   const [showMinimap, setShowMinimap] = useState(true);
   const [fontLigatures, setFontLigatures] = useState(false);
 
-  const [showOutputPanel, setShowOutputPanel] = useState(false);
-  const [showRenderPanel, setShowRenderPanel] = useState(false);
+  const [activePanel, setActivePanel] = useState(null);
+  console.log(activePanel)
 
   const [sourceCode, setSourceCode] = useState("//Welcome to CodeTrails!");
   const [compileResult, setCompileResult] = useState({});
@@ -32,11 +32,11 @@ function App() {
       .then((response) => setCompileResult(response.data))
       .catch((error) => console.error("Error fetching data:", error));
 
-    setShowOutputPanel(true);
+    setActivePanel("output");
   }
 
   function handleVisualizeRequest() {
-    setShowRenderPanel(true);
+    setActivePanel("render");
   }
 
   return (
@@ -49,26 +49,25 @@ function App() {
         doCompile={handleCompileRequest}
         doVisualize={handleVisualizeRequest}
       />
-      <div className="flex flex-grow flex-row">
+      <div className={`flex flex-grow ${activePanel === "output" ? "flex-col" : "flex-row"}`}>
         <CodeEditor
           theme={theme === "dark" ? "vs-dark" : "vs"}
           fontSize={fontsize}
           fontLigatures={fontLigatures}
           showMinimap={showMinimap}
-          showOutputPanel={showOutputPanel}
-          showRenderPanel={showRenderPanel}
+          activePanel={activePanel}
           setSourceCode={setSourceCode}
         />
-        {showRenderPanel && (
-          <RenderPanel setShowRenderPanel={setShowRenderPanel} />
+        {activePanel === "output" && (
+          <OutputPanel
+            closePanel={setActivePanel}
+            outputContent={[compileResult, setCompileResult]}
+          />
+        )}
+        {activePanel === "render" && (
+          <RenderPanel closePanel={setActivePanel} />
         )}
       </div>
-      {showOutputPanel && (
-        <OutputPanel
-          setShowOutputPanel={setShowOutputPanel}
-          outputContent={[compileResult, setCompileResult]}
-        />
-      )}
     </div>
   );
 }

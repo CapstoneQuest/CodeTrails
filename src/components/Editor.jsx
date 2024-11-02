@@ -7,8 +7,7 @@ function CodeEditor({
   fontSize,
   fontLigatures,
   showMinimap,
-  showOutputPanel,
-  showRenderPanel,
+  activePanel,
   setSourceCode,
 }) {
   const editorRef = useRef(null);
@@ -38,7 +37,7 @@ function CodeEditor({
 
   return (
     <div
-      className={`${showOutputPanel ? "h-1/2" : "h-full"} ${showRenderPanel ? "w-1/2" : "w-full"} flex-shrink-1 border-b border-b-light-platinum dark:border-b-dark-charcoal`}
+      className={`${activePanel === "output" ? "h-1/2 w-full" : activePanel === "render" ? "h-full w-1/2" : "size-full"} flex-shrink-1 border-b border-b-light-platinum dark:border-b-dark-charcoal`}
     >
       <Editor
         width="100%"
