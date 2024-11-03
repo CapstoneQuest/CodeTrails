@@ -10,12 +10,32 @@
 }
 
 @font-face {
-    font-family: "Geist Mono";
-    src: url("./assets/fonts/GeistMono[wght].woff2") format("woff2");
-    font-weight: 100 900;
-    font-style: normal;
-  }
+  font-family: "Geist Mono";
+  src: url("./assets/fonts/GeistMono[wght].woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+}
 
 body {
   @apply font-sans;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: theme("colors.light.white");
+}
+
+::-webkit-scrollbar-thumb {
+  background: theme("colors.light.cornflowerblue");
+}
+
+.dark ::-webkit-scrollbar-track {
+  background: theme("colors.dark.gunmetal");
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: theme("colors.dark.pigmentgreen");
 }

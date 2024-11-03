@@ -1,9 +1,7 @@
 /* eslint-disable react/prop-types */
-import * as ScrollArea from "@radix-ui/react-scroll-area";
-
 const RenderPanel = ({ closePanel }) => {
   return (
-    <div className="flex-shrink-1 h-full w-1/2 overflow-hidden border-b border-l border-b-light-platinum border-l-light-platinum dark:border-b-dark-charcoal dark:border-l-dark-charcoal">
+    <div className="flex h-full w-3/5 flex-col border-l border-l-light-platinum dark:border-l-dark-charcoal">
       <div className="flex justify-between border-b border-b-light-platinum px-4 py-1 text-light-cornflowerblue dark:border-b-dark-charcoal dark:text-dark-pigmentgreen">
         <span className="text-xl font-bold">Visualization</span>
         <button
@@ -26,23 +24,11 @@ const RenderPanel = ({ closePanel }) => {
           </svg>
         </button>
       </div>
-      <ScrollArea.Root className="size-full overflow-hidden border-b border-b-light-platinum bg-light-white px-4 dark:border-b-dark-charcoal dark:bg-dark-gunmetal">
-        <ScrollArea.Viewport className="size-full">
+      <div className="relative flex-1">
+        <div className="absolute inset-0 overflow-y-auto border-b border-b-light-platinum bg-light-white dark:border-b-dark-charcoal dark:bg-dark-gunmetal">
           <div className="whitespace-pre-wrap p-5 font-mono">todo</div>
-        </ScrollArea.Viewport>
-        <ScrollArea.Scrollbar
-          className="flex touch-none select-none bg-transparent p-0.5 transition-colors duration-[160ms] ease-out data-[orientation=horizontal]:h-2.5 data-[orientation=vertical]:w-2.5 data-[orientation=horizontal]:flex-col"
-          orientation="vertical"
-        >
-          <ScrollArea.Thumb className="relative flex-1 rounded-full bg-light-cornflowerblue before:absolute before:left-1/2 before:top-1/2 before:size-full before:min-h-11 before:min-w-11 before:-translate-x-1/2 before:-translate-y-1/2 dark:bg-dark-pigmentgreen" />
-        </ScrollArea.Scrollbar>
-        <ScrollArea.Scrollbar
-          className="flex touch-none select-none bg-transparent p-0.5 transition-colors duration-[160ms] ease-out data-[orientation=horizontal]:h-2.5 data-[orientation=vertical]:w-2.5 data-[orientation=horizontal]:flex-col"
-          orientation="horizontal"
-        >
-          <ScrollArea.Thumb className="relative flex-1 rounded-full bg-light-cornflowerblue before:absolute before:left-1/2 before:top-1/2 before:size-full before:min-h-11 before:min-w-11 before:-translate-x-1/2 before:-translate-y-1/2 dark:bg-dark-pigmentgreen" />
-        </ScrollArea.Scrollbar>
-      </ScrollArea.Root>
+        </div>
+      </div>
     </div>
   );
 };

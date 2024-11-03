@@ -1,6 +1,4 @@
 /* eslint-disable react/prop-types */
-import * as ScrollArea from "@radix-ui/react-scroll-area";
-
 const OutputPanel = ({ closePanel, outputContent }) => {
   const [outContent, setOutContent] = outputContent;
 
@@ -17,7 +15,7 @@ const OutputPanel = ({ closePanel, outputContent }) => {
   }
 
   return (
-    <div className="flex-shrink-1 h-1/2 w-full overflow-hidden">
+    <div className="flex h-1/2 w-full flex-col border-b border-t border-b-light-platinum border-t-light-platinum dark:border-b-dark-charcoal dark:border-t-dark-charcoal">
       <div className="flex justify-between border-b border-b-light-platinum px-4 py-1 text-light-cornflowerblue dark:border-b-dark-charcoal dark:text-dark-pigmentgreen">
         <span className="text-xl font-bold">Output</span>
         <button
@@ -40,21 +38,15 @@ const OutputPanel = ({ closePanel, outputContent }) => {
           </svg>
         </button>
       </div>
-      <ScrollArea.Root className="size-full overflow-hidden border-b border-b-light-platinum bg-light-white px-4 dark:border-b-dark-charcoal dark:bg-dark-gunmetal">
-        <ScrollArea.Viewport className="size-full">
+      <div className="relative flex-1">
+        <div className="absolute inset-0 overflow-y-auto bg-light-white dark:bg-dark-gunmetal">
           <div
             className={`${outContent.exit_code !== 0 ? "text-red-600" : ""} whitespace-pre-wrap p-5 font-mono`}
           >
             {outContent.exit_code === 0 ? outContent.stdout : outContent.stderr}
           </div>
-        </ScrollArea.Viewport>
-        <ScrollArea.Scrollbar
-          className="flex touch-none select-none bg-transparent p-0.5 transition-colors duration-[160ms] ease-out data-[orientation=horizontal]:h-2.5 data-[orientation=vertical]:w-2.5 data-[orientation=horizontal]:flex-col"
-          orientation="vertical"
-        >
-          <ScrollArea.Thumb className="relative flex-1 rounded-full bg-light-cornflowerblue before:absolute before:left-1/2 before:top-1/2 before:size-full before:min-h-11 before:min-w-11 before:-translate-x-1/2 before:-translate-y-1/2 dark:bg-dark-pigmentgreen" />
-        </ScrollArea.Scrollbar>
-      </ScrollArea.Root>
+        </div>
+      </div>
     </div>
   );
 };
