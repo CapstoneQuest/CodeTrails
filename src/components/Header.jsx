@@ -106,6 +106,8 @@ const Menubar = ({
               fill="currentColor"
               fillRule="evenodd"
               clipRule="evenodd"
+              stroke="currentColor"
+              strokeWidth="1"
             ></path>
           </svg>
         </Toolbar.Button>
@@ -125,6 +127,8 @@ const Menubar = ({
               fill="currentColor"
               fillRule="evenodd"
               clipRule="evenodd"
+              stroke="currentColor"
+              strokeWidth="1"
             ></path>
           </svg>
         </Toolbar.Button>
@@ -358,6 +362,8 @@ const Menubar = ({
                     fill="currentColor"
                     fillRule="evenodd"
                     clipRule="evenodd"
+                    stroke="currentColor"
+                    strokeWidth="1"
                   ></path>
                 </svg>
               </DropdownMenu.ItemIndicator>
@@ -381,6 +387,8 @@ const Menubar = ({
                     fill="currentColor"
                     fillRule="evenodd"
                     clipRule="evenodd"
+                    stroke="currentColor"
+                    strokeWidth="1"
                   ></path>
                 </svg>
               </DropdownMenu.ItemIndicator>
