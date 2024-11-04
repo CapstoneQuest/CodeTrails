@@ -1,3 +1,5 @@
+import PrimitiveType from "./render_components/PrimitiveType";
+
 /* eslint-disable react/prop-types */
 const RenderPanel = ({ closePanel }) => {
   return (
@@ -26,7 +28,42 @@ const RenderPanel = ({ closePanel }) => {
       </div>
       <div className="relative flex-1">
         <div className="absolute inset-0 overflow-y-auto border-b border-b-light-platinum bg-light-white dark:border-b-dark-charcoal dark:bg-dark-gunmetal">
-          <div className="whitespace-pre-wrap p-5 font-mono">todo</div>
+          <div className="whitespace-pre-wrap p-5 font-mono">
+            <div className="flex justify-around">
+              <div className="flex flex-col gap-2">
+                <PrimitiveType
+                  dataType={"int"}
+                  name={"num1"}
+                  value={"69"}
+                  address={"0x7ffff7fb5e48"}
+                  showAddress={false}
+                />
+                <PrimitiveType
+                  dataType={"int"}
+                  name={"num1"}
+                  value={"69"}
+                  address={"0x7ffff7fb5e48"}
+                  showAddress={true}
+                />
+              </div>
+              <div className="flex flex-col gap-2">
+                <PrimitiveType
+                  dataType={"int"}
+                  name={"num1"}
+                  value={"69"}
+                  address={"0x7ffff7fb5e48"}
+                  showAddress={true}
+                />
+                <PrimitiveType
+                  dataType={"int"}
+                  name={"num1"}
+                  value={"69"}
+                  address={"0x7ffff7fb5e48"}
+                  showAddress={false}
+                />
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
