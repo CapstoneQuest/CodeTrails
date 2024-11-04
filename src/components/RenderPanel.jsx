@@ -1,12 +1,431 @@
-import ArrayType from "./render_components/ArrayType";
+import { useState } from "react";
 import PrimitiveType from "./render_components/PrimitiveType";
+
+const trace = [
+  {
+    function: "main",
+    heap: {},
+    line: 14,
+    stack_frames: [
+      {
+        function: "main",
+        locals_variables: [
+          {
+            address: "0x7fffffffdd3c",
+            data_type: "int",
+            name: "first_number",
+            value: "32767",
+          },
+          {
+            address: "0x7fffffffdd38",
+            data_type: "int",
+            name: "second_number",
+            value: "-135568572",
+          },
+          {
+            address: "0x7fffffffdd34",
+            data_type: "int",
+            name: "sum",
+            value: "32767",
+          },
+        ],
+      },
+    ],
+    stdout: "",
+  },
+  {
+    function: "main",
+    heap: {},
+    line: 15,
+    stack_frames: [
+      {
+        function: "main",
+        locals_variables: [
+          {
+            address: "0x7fffffffdd3c",
+            data_type: "int",
+            name: "first_number",
+            value: "70",
+          },
+          {
+            address: "0x7fffffffdd38",
+            data_type: "int",
+            name: "second_number",
+            value: "-135568572",
+          },
+          {
+            address: "0x7fffffffdd34",
+            data_type: "int",
+            name: "sum",
+            value: "32767",
+          },
+        ],
+      },
+    ],
+    stdout: "",
+  },
+  {
+    function: "main",
+    heap: {},
+    line: 17,
+    stack_frames: [
+      {
+        function: "main",
+        locals_variables: [
+          {
+            address: "0x7fffffffdd3c",
+            data_type: "int",
+            name: "first_number",
+            value: "70",
+          },
+          {
+            address: "0x7fffffffdd38",
+            data_type: "int",
+            name: "second_number",
+            value: "30",
+          },
+          {
+            address: "0x7fffffffdd34",
+            data_type: "int",
+            name: "sum",
+            value: "32767",
+          },
+        ],
+      },
+    ],
+    stdout: "",
+  },
+  {
+    function: "add",
+    heap: {},
+    line: 6,
+    stack_frames: [
+      {
+        function: "add",
+        locals_variables: [
+          {
+            address: "0x7fffffffdd0c",
+            data_type: "int",
+            name: "a",
+            value: "70",
+          },
+          {
+            address: "0x7fffffffdd08",
+            data_type: "int",
+            name: "b",
+            value: "30",
+          },
+          {
+            address: "0x7fffffffdd1c",
+            data_type: "int",
+            name: "num1",
+            value: "32767",
+          },
+          {
+            address: "0x7fffffffdd18",
+            data_type: "int",
+            name: "num2",
+            value: "-135568854",
+          },
+        ],
+      },
+      {
+        function: "main",
+        locals_variables: [
+          {
+            address: "0x7fffffffdd3c",
+            data_type: "int",
+            name: "first_number",
+            value: "70",
+          },
+          {
+            address: "0x7fffffffdd38",
+            data_type: "int",
+            name: "second_number",
+            value: "30",
+          },
+          {
+            address: "0x7fffffffdd34",
+            data_type: "int",
+            name: "sum",
+            value: "32767",
+          },
+        ],
+      },
+    ],
+    stdout: "",
+  },
+  {
+    function: "add",
+    heap: {},
+    line: 7,
+    stack_frames: [
+      {
+        function: "add",
+        locals_variables: [
+          {
+            address: "0x7fffffffdd0c",
+            data_type: "int",
+            name: "a",
+            value: "70",
+          },
+          {
+            address: "0x7fffffffdd08",
+            data_type: "int",
+            name: "b",
+            value: "30",
+          },
+          {
+            address: "0x7fffffffdd1c",
+            data_type: "int",
+            name: "num1",
+            value: "70",
+          },
+          {
+            address: "0x7fffffffdd18",
+            data_type: "int",
+            name: "num2",
+            value: "-135568854",
+          },
+        ],
+      },
+      {
+        function: "main",
+        locals_variables: [
+          {
+            address: "0x7fffffffdd3c",
+            data_type: "int",
+            name: "first_number",
+            value: "70",
+          },
+          {
+            address: "0x7fffffffdd38",
+            data_type: "int",
+            name: "second_number",
+            value: "30",
+          },
+          {
+            address: "0x7fffffffdd34",
+            data_type: "int",
+            name: "sum",
+            value: "32767",
+          },
+        ],
+      },
+    ],
+    stdout: "",
+  },
+  {
+    function: "add",
+    heap: {},
+    line: 8,
+    stack_frames: [
+      {
+        function: "add",
+        locals_variables: [
+          {
+            address: "0x7fffffffdd0c",
+            data_type: "int",
+            name: "a",
+            value: "70",
+          },
+          {
+            address: "0x7fffffffdd08",
+            data_type: "int",
+            name: "b",
+            value: "30",
+          },
+          {
+            address: "0x7fffffffdd1c",
+            data_type: "int",
+            name: "num1",
+            value: "70",
+          },
+          {
+            address: "0x7fffffffdd18",
+            data_type: "int",
+            name: "num2",
+            value: "30",
+          },
+        ],
+      },
+      {
+        function: "main",
+        locals_variables: [
+          {
+            address: "0x7fffffffdd3c",
+            data_type: "int",
+            name: "first_number",
+            value: "70",
+          },
+          {
+            address: "0x7fffffffdd38",
+            data_type: "int",
+            name: "second_number",
+            value: "30",
+          },
+          {
+            address: "0x7fffffffdd34",
+            data_type: "int",
+            name: "sum",
+            value: "32767",
+          },
+        ],
+      },
+    ],
+    stdout: "",
+  },
+  {
+    function: "add",
+    heap: {},
+    line: 9,
+    stack_frames: [
+      {
+        function: "add",
+        locals_variables: [
+          {
+            address: "0x7fffffffdd0c",
+            data_type: "int",
+            name: "a",
+            value: "70",
+          },
+          {
+            address: "0x7fffffffdd08",
+            data_type: "int",
+            name: "b",
+            value: "30",
+          },
+          {
+            address: "0x7fffffffdd1c",
+            data_type: "int",
+            name: "num1",
+            value: "70",
+          },
+          {
+            address: "0x7fffffffdd18",
+            data_type: "int",
+            name: "num2",
+            value: "30",
+          },
+        ],
+      },
+      {
+        function: "main",
+        locals_variables: [
+          {
+            address: "0x7fffffffdd3c",
+            data_type: "int",
+            name: "first_number",
+            value: "70",
+          },
+          {
+            address: "0x7fffffffdd38",
+            data_type: "int",
+            name: "second_number",
+            value: "30",
+          },
+          {
+            address: "0x7fffffffdd34",
+            data_type: "int",
+            name: "sum",
+            value: "32767",
+          },
+        ],
+      },
+    ],
+    stdout: "",
+  },
+  {
+    function: "main",
+    heap: {},
+    line: 19,
+    stack_frames: [
+      {
+        function: "main",
+        locals_variables: [
+          {
+            address: "0x7fffffffdd3c",
+            data_type: "int",
+            name: "first_number",
+            value: "70",
+          },
+          {
+            address: "0x7fffffffdd38",
+            data_type: "int",
+            name: "second_number",
+            value: "30",
+          },
+          {
+            address: "0x7fffffffdd34",
+            data_type: "int",
+            name: "sum",
+            value: "100",
+          },
+        ],
+      },
+    ],
+    stdout: "",
+  },
+  {
+    function: "main",
+    heap: {},
+    line: 21,
+    stack_frames: [
+      {
+        function: "main",
+        locals_variables: [
+          {
+            address: "0x7fffffffdd3c",
+            data_type: "int",
+            name: "first_number",
+            value: "70",
+          },
+          {
+            address: "0x7fffffffdd38",
+            data_type: "int",
+            name: "second_number",
+            value: "30",
+          },
+          {
+            address: "0x7fffffffdd34",
+            data_type: "int",
+            name: "sum",
+            value: "100",
+          },
+        ],
+      },
+    ],
+    stdout: "sum of 70 and 30 is: 100\n",
+  },
+];
 
 /* eslint-disable react/prop-types */
 const RenderPanel = ({ closePanel }) => {
+  const [step, setStep] = useState(0);
+  const [showAddresses, setShowAddresses] = useState(false)
+
   return (
     <div className="flex h-full w-3/5 flex-col border-l border-l-light-platinum dark:border-l-dark-charcoal">
       <div className="flex justify-between border-b border-b-light-platinum px-4 py-1 text-light-cornflowerblue dark:border-b-dark-charcoal dark:text-dark-pigmentgreen">
         <span className="text-xl font-bold">Visualization</span>
+        <button
+          onClick={() => setStep(Math.max(0, step - 1))}
+          className="inline-flex h-auto items-center justify-center rounded-full bg-transparent px-4 hover:bg-light-cornflowerblue hover:text-light-white hover:outline-0 dark:hover:bg-dark-pigmentgreen"
+        >
+          Previous Step
+        </button>
+        <button
+          onClick={() => setStep(Math.min(trace.length - 1, step + 1))}
+          className="inline-flex h-auto items-center justify-center rounded-full bg-transparent px-4 hover:bg-light-cornflowerblue hover:text-light-white hover:outline-0 dark:hover:bg-dark-pigmentgreen"
+        >
+          Next Step
+        </button>
+        <button
+          onClick={() => setShowAddresses(!showAddresses)}
+          className="inline-flex h-auto items-center justify-center rounded-full bg-transparent px-4 hover:bg-light-cornflowerblue hover:text-light-white hover:outline-0 dark:hover:bg-dark-pigmentgreen"
+        >
+          {showAddresses ? "Hide Memory Addresses" : "Show Memory Addresses"}
+        </button>
         <button
           onClick={() => closePanel(null)}
           className="inline-flex h-auto items-center justify-center rounded-full bg-transparent px-4 hover:bg-light-cornflowerblue hover:text-light-white hover:outline-0 dark:hover:bg-dark-pigmentgreen"
@@ -32,51 +451,27 @@ const RenderPanel = ({ closePanel }) => {
           <div className="whitespace-pre-wrap p-5 font-mono">
             <div className="flex justify-between gap-8">
               <div className="flex flex-col gap-3">
-                <PrimitiveType
-                  dataType={"int"}
-                  name={"num1"}
-                  value={"69"}
-                  address={"0x7ffff7fb5e48"}
-                  showAddress={false}
-                />
-                <PrimitiveType
-                  dataType={"int"}
-                  name={"num1"}
-                  value={"69"}
-                  address={"0x7ffff7fb5e48"}
-                  showAddress={true}
-                />
-                <ArrayType
-                  dataType={"int [5]"}
-                  name={"num1"}
-                  values={["0", "20", "0", "100", "0"]}
-                  address={"0x7ffff7fb5e48"}
-                  showAddress={true}
-                />
+                <h2 className="text-center">Stack</h2>
+                {trace[step].stack_frames.map((frame, frameIndex) => (
+                  <div
+                    key={frameIndex}
+                    className="flex flex-col gap-2 rounded-lg bg-light-platinum p-2 dark:bg-dark-charcoal"
+                  >
+                    <h2>{frame.function}</h2>
+                    {frame.locals_variables.map((variable, varIndex) => (
+                      <PrimitiveType
+                        key={varIndex}
+                        dataType={variable.data_type}
+                        name={variable.name}
+                        value={variable.value}
+                        address={variable.address}
+                        showAddress={showAddresses}
+                      />
+                    ))}
+                  </div>
+                ))}
               </div>
-              <div className="flex flex-col gap-3">
-                <PrimitiveType
-                  dataType={"int"}
-                  name={"num1"}
-                  value={"69"}
-                  address={"0x7ffff7fb5e48"}
-                  showAddress={true}
-                />
-                <ArrayType
-                  dataType={"int [5]"}
-                  name={"num1"}
-                  values={["0", "20", "0", "100", "0"]}
-                  address={"0x7ffff7fb5e48"}
-                  showAddress={false}
-                />
-                <PrimitiveType
-                  dataType={"int"}
-                  name={"num1"}
-                  value={"69"}
-                  address={"0x7ffff7fb5e48"}
-                  showAddress={false}
-                />
-              </div>
+              <div className="flex flex-col gap-3"></div>
             </div>
           </div>
         </div>
