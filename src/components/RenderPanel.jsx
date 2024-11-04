@@ -1,3 +1,4 @@
+import ArrayType from "./render_components/ArrayType";
 import PrimitiveType from "./render_components/PrimitiveType";
 
 /* eslint-disable react/prop-types */
@@ -29,8 +30,8 @@ const RenderPanel = ({ closePanel }) => {
       <div className="relative flex-1">
         <div className="absolute inset-0 overflow-y-auto border-b border-b-light-platinum bg-light-white dark:border-b-dark-charcoal dark:bg-dark-gunmetal">
           <div className="whitespace-pre-wrap p-5 font-mono">
-            <div className="flex justify-around">
-              <div className="flex flex-col gap-2">
+            <div className="flex justify-between gap-8">
+              <div className="flex flex-col gap-3">
                 <PrimitiveType
                   dataType={"int"}
                   name={"num1"}
@@ -45,14 +46,28 @@ const RenderPanel = ({ closePanel }) => {
                   address={"0x7ffff7fb5e48"}
                   showAddress={true}
                 />
+                <ArrayType
+                  dataType={"int [5]"}
+                  name={"num1"}
+                  values={["0", "20", "0", "100", "0"]}
+                  address={"0x7ffff7fb5e48"}
+                  showAddress={true}
+                />
               </div>
-              <div className="flex flex-col gap-2">
+              <div className="flex flex-col gap-3">
                 <PrimitiveType
                   dataType={"int"}
                   name={"num1"}
                   value={"69"}
                   address={"0x7ffff7fb5e48"}
                   showAddress={true}
+                />
+                <ArrayType
+                  dataType={"int [5]"}
+                  name={"num1"}
+                  values={["0", "20", "0", "100", "0"]}
+                  address={"0x7ffff7fb5e48"}
+                  showAddress={false}
                 />
                 <PrimitiveType
                   dataType={"int"}
