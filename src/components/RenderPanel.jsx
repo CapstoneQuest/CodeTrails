@@ -1,6 +1,8 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react";
 import PrimitiveType from "./render_components/PrimitiveType";
+import ArrayType from "./render_components/ArrayType";
+import PrimitiveHeap from "./render_components/PrimitiveHeap";
 
 const RenderPanel = ({ closePanel, setProgress, traceResult }) => {
   const [step, setStep] = useState(0);
@@ -170,29 +172,58 @@ const RenderPanel = ({ closePanel, setProgress, traceResult }) => {
       <div className="relative flex-1">
         <div className="absolute inset-0 overflow-y-auto border-b border-b-light-platinum bg-light-white dark:border-b-dark-charcoal dark:bg-dark-gunmetal">
           <div className="whitespace-pre-wrap p-5 font-mono">
-            <div className="flex justify-between gap-8">
+            <div className="flex justify-between gap-20">
               <div className="flex flex-col gap-3">
-                <h2 className="text-center">Stack</h2>
+                <h2 className="text-right">Stack</h2>
                 {traceResult[step].stack_frames.map((frame, frameIndex) => (
                   <div
                     key={frameIndex}
                     className="flex flex-col gap-2 rounded-lg bg-light-platinum p-2 dark:bg-dark-charcoal"
                   >
                     <h2>{frame.function}</h2>
-                    {frame.local_variables.map((variable, varIndex) => (
-                      <PrimitiveType
-                        key={varIndex}
-                        dataType={variable.data_type}
-                        name={variable.name}
-                        value={variable.value}
-                        address={variable.address}
-                        showAddress={showAddresses}
-                      />
-                    ))}
+                    {frame.local_variables.map((variable, varIndex) =>
+                      Array.isArray(variable.value) ? (
+                        <ArrayType
+                          key={varIndex}
+                          dataType={variable.data_type}
+                          name={variable.name}
+                          values={variable.value}
+                          address={variable.address}
+                          showAddress={showAddresses}
+                        />
+                      ) : (
+                        <PrimitiveType
+                          key={varIndex}
+                          dataType={variable.data_type}
+                          name={variable.name}
+                          value={variable.value}
+                          address={variable.address}
+                          showAddress={showAddresses}
+                        />
+                      ),
+                    )}
                   </div>
                 ))}
               </div>
-              <div className="flex flex-col gap-3"></div>
+              <div className="flex flex-col gap-3">
+                <h2 className="text-left">Heap</h2>
+                {Object.entries(traceResult[step].heap).map(
+                  ([address, data], heapIndex) => (
+                    <div
+                      key={heapIndex}
+                      className="flex flex-col gap-2 rounded-lg bg-light-platinum p-2 dark:bg-dark-charcoal"
+                    >
+                      <PrimitiveHeap
+                        dataType={data[0]}
+                        name={""}
+                        value={data[1][2]}
+                        address={address}
+                        showAddress={showAddresses}
+                      />
+                    </div>
+                  ),
+                )}
+              </div>
             </div>
           </div>
         </div>
