@@ -2,7 +2,7 @@
 import { useState } from "react";
 import PrimitiveType from "./render_components/PrimitiveType";
 
-const RenderPanel = ({ closePanel, traceResult }) => {
+const RenderPanel = ({ closePanel, setProgress, traceResult }) => {
   const [step, setStep] = useState(0);
   const [showAddresses, setShowAddresses] = useState(false);
 
@@ -143,7 +143,10 @@ const RenderPanel = ({ closePanel, traceResult }) => {
           </button>
         </div>
         <button
-          onClick={() => closePanel(null)}
+          onClick={() => {
+            closePanel(null);
+            setProgress(0);
+          }}
           className="inline-flex h-auto items-center justify-center rounded-full bg-transparent px-4 hover:bg-light-cornflowerblue hover:text-light-white hover:outline-0 dark:hover:bg-dark-pigmentgreen"
         >
           <svg

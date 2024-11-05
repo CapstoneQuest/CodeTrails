@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import * as Toolbar from "@radix-ui/react-toolbar";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
+import * as Progress from "@radix-ui/react-progress";
 import { useState } from "react";
 
 const Menubar = ({
@@ -8,6 +9,7 @@ const Menubar = ({
   setFontSize,
   setFontLigatures,
   setMinimap,
+  progress,
   doCompile,
   doVisualize,
   doDownload,
@@ -83,9 +85,21 @@ const Menubar = ({
         </Toolbar.Button>
       </div>
 
-      {/* :::::::::::: MYSTERY BAR :::::::::::: */}
-      <div className="mx-64 flex h-auto flex-grow cursor-pointer items-center justify-center rounded-xl border-2 border-light-platinum py-1 text-center font-mono text-xs text-light-spacegray dark:border-dark-charcoal dark:text-dark-frenchgray lg:mx-20 xl:mx-20 2xl:mx-72">
-        <span>CODE TRAILS</span>
+      {/* :::::::::::: PROGRESS BAR :::::::::::: */}
+      <div className="mx-64 flex h-auto flex-grow cursor-pointer items-center justify-center overflow-hidden rounded-full border border-light-platinum bg-transparent text-center font-mono text-xs text-light-spacegray dark:border-dark-charcoal dark:text-dark-frenchgray lg:mx-20 xl:mx-20 2xl:mx-72">
+        {progress === 0 ? (
+          "CodeTrails"
+        ) : (
+          <Progress.Root
+            className="relative size-full bg-transparent"
+            value={progress}
+          >
+            <Progress.Indicator
+              className="ease-[cubic-bezier(0.65, 0, 0.35, 1)] size-full bg-light-azureblue transition-transform duration-[660ms] dark:bg-dark-ferngreen"
+              style={{ transform: `translateX(-${100 - progress}%)` }}
+            />
+          </Progress.Root>
+        )}
       </div>
 
       {/* :::::::::::: DOWNLOAD AND UPLOAD BUTTONS :::::::::::: */}

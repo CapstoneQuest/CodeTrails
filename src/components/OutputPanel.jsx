@@ -1,11 +1,14 @@
 /* eslint-disable react/prop-types */
-const OutputPanel = ({ closePanel, outputContent }) => {
+const OutputPanel = ({ closePanel, setProgress, outputContent }) => {
   return (
     <div className="flex h-1/2 w-full flex-col border-b border-t border-b-light-platinum border-t-light-platinum dark:border-b-dark-charcoal dark:border-t-dark-charcoal">
       <div className="flex justify-between border-b border-b-light-platinum px-4 py-1 text-light-cornflowerblue dark:border-b-dark-charcoal dark:text-dark-pigmentgreen">
         <span className="text-xl font-bold">Output</span>
         <button
-          onClick={() => closePanel(null)}
+          onClick={() => {
+            closePanel(null);
+            setProgress(0);
+          }}
           className="inline-flex h-auto items-center justify-center rounded-full bg-transparent px-4 hover:bg-light-cornflowerblue hover:text-light-white hover:outline-0 dark:hover:bg-dark-pigmentgreen"
         >
           <svg
@@ -29,7 +32,9 @@ const OutputPanel = ({ closePanel, outputContent }) => {
           <div
             className={`${outputContent.exit_code !== 0 ? "text-red-600" : ""} whitespace-pre-wrap p-5 font-mono`}
           >
-            {outputContent.exit_code === 0 ? outputContent.stdout : outputContent.stderr}
+            {outputContent.exit_code === 0
+              ? outputContent.stdout
+              : outputContent.stderr}
           </div>
         </div>
       </div>

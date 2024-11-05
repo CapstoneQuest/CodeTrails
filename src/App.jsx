@@ -15,14 +15,14 @@ function App() {
 
   const [activePanel, setActivePanel] = useState(null);
 
+  const [httpProgress, setHttpProgress] = useState(0);
+
   const [sourceCode, setSourceCode] = useState("//Welcome to CodeTrails!");
   const [compileResult, setCompileResult] = useState({});
   const [uploadResult, setUploadResult] = useState({});
   const [traceResult, setTraceResult] = useState({});
 
   const fileInputRef = useRef(null);
-
-  console.log(sourceCode)
 
   useEffect(() => {
     if (theme === "dark") {
@@ -31,27 +31,45 @@ function App() {
       document.documentElement.classList.remove("dark");
     }
 
+    if (httpProgress > 0 && httpProgress < 100) {
+      const interval = setInterval(() => {
+        setHttpProgress((prevProgress) => Math.min(prevProgress + 0.5, 100));
+      }, 300);
+
+      return () => clearInterval(interval);
+    }
+
     setSourceCode(uploadResult.source_code);
-  }, [theme, uploadResult]);
+  }, [theme, uploadResult, httpProgress]);
 
   function handleCompileRequest() {
+    setHttpProgress(20);
     api
       .post("/compile", { sourceCode: sourceCode, stdin: "" })
       .then((response) => {
         setCompileResult(response.data);
+        setHttpProgress(100);
         setActivePanel("output");
       })
-      .catch((error) => console.error("Error fetching data:", error));
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+        setHttpProgress(0);
+      });
   }
 
   function handleVisualizeRequest() {
+    setHttpProgress(5);
     api
       .post("/generate-trace", { sourceCode: sourceCode })
       .then((response) => {
         setTraceResult(response.data);
+        setHttpProgress(100);
         setActivePanel("render");
       })
-      .catch((error) => console.error("Error fetching data:", error));
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+        setHttpProgress(0);
+      });
   }
 
   function handleDownloadRequest() {
@@ -89,6 +107,7 @@ function App() {
         setFontSize={setFontSize}
         setFontLigatures={setFontLigatures}
         setMinimap={setShowMinimap}
+        progress={httpProgress}
         doCompile={handleCompileRequest}
         doVisualize={handleVisualizeRequest}
         doDownload={handleDownloadRequest}
@@ -115,12 +134,14 @@ function App() {
         {activePanel === "output" && (
           <OutputPanel
             closePanel={setActivePanel}
+            setProgress={setHttpProgress}
             outputContent={compileResult}
           />
         )}
         {activePanel === "render" && (
           <RenderPanel
             closePanel={setActivePanel}
+            setProgress={setHttpProgress}
             traceResult={traceResult.trace}
           />
         )}
