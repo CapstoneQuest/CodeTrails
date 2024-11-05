@@ -1,25 +1,11 @@
 /* eslint-disable react/prop-types */
 const OutputPanel = ({ closePanel, outputContent }) => {
-  const [outContent, setOutContent] = outputContent;
-
-  function closeAndResetPanel() {
-    closePanel(null);
-
-    setOutContent({
-      stdout: null,
-      stderr: null,
-      exit_code: null,
-      status: null,
-      time: null,
-    });
-  }
-
   return (
     <div className="flex h-1/2 w-full flex-col border-b border-t border-b-light-platinum border-t-light-platinum dark:border-b-dark-charcoal dark:border-t-dark-charcoal">
       <div className="flex justify-between border-b border-b-light-platinum px-4 py-1 text-light-cornflowerblue dark:border-b-dark-charcoal dark:text-dark-pigmentgreen">
         <span className="text-xl font-bold">Output</span>
         <button
-          onClick={closeAndResetPanel}
+          onClick={() => closePanel(null)}
           className="inline-flex h-auto items-center justify-center rounded-full bg-transparent px-4 hover:bg-light-cornflowerblue hover:text-light-white hover:outline-0 dark:hover:bg-dark-pigmentgreen"
         >
           <svg
@@ -41,9 +27,9 @@ const OutputPanel = ({ closePanel, outputContent }) => {
       <div className="relative flex-1">
         <div className="absolute inset-0 overflow-y-auto bg-light-white dark:bg-dark-gunmetal">
           <div
-            className={`${outContent.exit_code !== 0 ? "text-red-600" : ""} whitespace-pre-wrap p-5 font-mono`}
+            className={`${outputContent.exit_code !== 0 ? "text-red-600" : ""} whitespace-pre-wrap p-5 font-mono`}
           >
-            {outContent.exit_code === 0 ? outContent.stdout : outContent.stderr}
+            {outputContent.exit_code === 0 ? outputContent.stdout : outputContent.stderr}
           </div>
         </div>
       </div>

@@ -18,8 +18,11 @@ function App() {
   const [sourceCode, setSourceCode] = useState("//Welcome to CodeTrails!");
   const [compileResult, setCompileResult] = useState({});
   const [uploadResult, setUploadResult] = useState({});
+  const [traceResult, setTraceResult] = useState({});
 
   const fileInputRef = useRef(null);
+
+  console.log(sourceCode)
 
   useEffect(() => {
     if (theme === "dark") {
@@ -28,20 +31,27 @@ function App() {
       document.documentElement.classList.remove("dark");
     }
 
-    setSourceCode(uploadResult.source_code)
+    setSourceCode(uploadResult.source_code);
   }, [theme, uploadResult]);
 
   function handleCompileRequest() {
     api
       .post("/compile", { sourceCode: sourceCode, stdin: "" })
-      .then((response) => setCompileResult(response.data))
+      .then((response) => {
+        setCompileResult(response.data);
+        setActivePanel("output");
+      })
       .catch((error) => console.error("Error fetching data:", error));
-
-    setActivePanel("output");
   }
 
   function handleVisualizeRequest() {
-    setActivePanel("render");
+    api
+      .post("/generate-trace", { sourceCode: sourceCode })
+      .then((response) => {
+        setTraceResult(response.data);
+        setActivePanel("render");
+      })
+      .catch((error) => console.error("Error fetching data:", error));
   }
 
   function handleDownloadRequest() {
@@ -105,11 +115,14 @@ function App() {
         {activePanel === "output" && (
           <OutputPanel
             closePanel={setActivePanel}
-            outputContent={[compileResult, setCompileResult]}
+            outputContent={compileResult}
           />
         )}
         {activePanel === "render" && (
-          <RenderPanel closePanel={setActivePanel} />
+          <RenderPanel
+            closePanel={setActivePanel}
+            traceResult={traceResult.trace}
+          />
         )}
       </div>
     </div>
