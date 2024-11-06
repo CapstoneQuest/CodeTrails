@@ -19,7 +19,7 @@ function App() {
 
   const [sourceCode, setSourceCode] = useState("//Welcome to CodeTrails!");
   const [compileResult, setCompileResult] = useState({});
-  const [uploadResult, setUploadResult] = useState({});
+  const [uploadResult, setUploadResult] = useState(null);
   const [traceResult, setTraceResult] = useState({});
 
   const [line, setLine] = useState(null);
@@ -41,7 +41,9 @@ function App() {
       return () => clearInterval(interval);
     }
 
-    setSourceCode(uploadResult.source_code);
+    if (uploadResult && uploadResult.source_code) {
+      setSourceCode(uploadResult.source_code);
+    }
   }, [theme, uploadResult, httpProgress]);
 
   function handleCompileRequest() {
