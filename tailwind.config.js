@@ -6,7 +6,7 @@ export default {
     extend: {
       fontFamily: {
         sans: ["Geist Sans", "sans-serif"],
-        mono: ["Geist Mono"]
+        mono: ["Geist Mono"],
       },
       colors: {
         dark: {
@@ -17,7 +17,7 @@ export default {
           pigmentgreen: "#46954A",
         },
         light: {
-          white: "#FFFFFF",
+          white: "#F5F5F5",
           platinum: "#E1E4E8",
           spacegray: "#2F363D",
           cornflowerblue: "#539BF5",

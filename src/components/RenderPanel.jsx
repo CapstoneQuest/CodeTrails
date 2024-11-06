@@ -4,17 +4,24 @@ import { useEffect, useState } from "react";
 import PrimitiveType from "./render_components/PrimitiveType";
 import ArrayType from "./render_components/ArrayType";
 import PrimitiveHeap from "./render_components/PrimitiveHeap";
+import ObjectHeap from "./render_components/ObjectHeap";
 
-const RenderPanel = ({ closePanel, setProgress, traceResult, setCurrentLine }) => {
+const RenderPanel = ({
+  closePanel,
+  setProgress,
+  traceResult,
+  setCurrentLine,
+}) => {
   const [step, setStep] = useState(0);
   const [showAddresses, setShowAddresses] = useState(false);
+
+  const primitiveTypes = ["char", "int", "long", "float", "double"];
 
   useEffect(() => {
     if (traceResult[step]) {
       setCurrentLine(parseInt(traceResult[step].line));
     }
   }, [step]);
-  
 
   return (
     <div className="flex h-full w-3/5 flex-col border-l border-l-light-platinum dark:border-l-dark-charcoal">
@@ -188,7 +195,10 @@ const RenderPanel = ({ closePanel, setProgress, traceResult, setCurrentLine }) =
                     key={frameIndex}
                     className="flex flex-col gap-2 rounded-lg bg-light-platinum p-2 dark:bg-dark-charcoal"
                   >
-                    <h2>{frame.function}</h2>
+                    <h2>
+                      {frame.function}
+                      {"()"}
+                    </h2>
                     {frame.local_variables.map((variable, varIndex) =>
                       Array.isArray(variable.value) ? (
                         <ArrayType
@@ -221,13 +231,23 @@ const RenderPanel = ({ closePanel, setProgress, traceResult, setCurrentLine }) =
                       key={heapIndex}
                       className="flex flex-col gap-2 rounded-lg bg-light-platinum p-2 dark:bg-dark-charcoal"
                     >
-                      <PrimitiveHeap
-                        dataType={data[0]}
-                        name={""}
-                        value={data[1][2]}
-                        address={address}
-                        showAddress={showAddresses}
-                      />
+                      {!primitiveTypes.includes(data[0]) ? (
+                        <ObjectHeap
+                          dataType={data[0]}
+                          name={""}
+                          members={data[1]}
+                          address={address}
+                          showAddress={showAddresses}
+                        />
+                      ) : (
+                        <PrimitiveHeap
+                          dataType={data[0]}
+                          name={""}
+                          value={data[1][2]}
+                          address={address}
+                          showAddress={showAddresses}
+                        />
+                      )}
                     </div>
                   ),
                 )}
