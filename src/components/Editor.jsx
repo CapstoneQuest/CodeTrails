@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { Editor } from "@monaco-editor/react";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 function CodeEditor({
   theme,
@@ -9,10 +9,13 @@ function CodeEditor({
   showMinimap,
   activePanel,
   sourceCode,
+  currentLine,
 }) {
   const editorRef = useRef(null);
 
   const [editorValue, setEditorValue] = sourceCode;
+
+  const [decorationIds, setDecorationIds] = useState([]);
 
   function handleEditorDidMount(editor) {
     editorRef.current = editor;
@@ -33,6 +36,33 @@ function CodeEditor({
       });
     }
   }, [theme, fontSize, fontLigatures, showMinimap]);
+
+  useEffect(() => {
+    const updateGlyph = (line) => {
+      if (editorRef.current) {
+        const newDecorations = [
+          {
+            range: new window.monaco.Range(line, 1, line, 1),
+            options: {
+              isWholeLine: false,
+              glyphMarginClassName: "glyph-icon",
+              glyphMarginHoverMessage: { value: "Next line to execute" },
+            },
+          },
+        ];
+
+        const newDecorationIds = editorRef.current.deltaDecorations(
+          decorationIds,
+          newDecorations,
+        );
+        setDecorationIds(newDecorationIds);
+      }
+    };
+
+    if (currentLine !== null) {
+      updateGlyph(currentLine);
+    }
+  }, [currentLine, decorationIds]);
 
   return (
     <div
@@ -55,6 +85,7 @@ function CodeEditor({
           cursorBlinking: "phase",
           mouseWheelZoom: true,
           showUnused: true,
+          lineNumbersMinChars: 3,
           minimap: {
             enabled: true,
           },

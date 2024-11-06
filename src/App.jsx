@@ -22,6 +22,8 @@ function App() {
   const [uploadResult, setUploadResult] = useState({});
   const [traceResult, setTraceResult] = useState({});
 
+  const [line, setLine] = useState(null);
+
   const fileInputRef = useRef(null);
 
   useEffect(() => {
@@ -130,6 +132,7 @@ function App() {
           showMinimap={showMinimap}
           activePanel={activePanel}
           sourceCode={[sourceCode, setSourceCode]}
+          currentLine={line}
         />
         {activePanel === "output" && (
           <OutputPanel
@@ -143,6 +146,7 @@ function App() {
             closePanel={setActivePanel}
             setProgress={setHttpProgress}
             traceResult={traceResult.trace}
+            setCurrentLine={setLine}
           />
         )}
       </div>

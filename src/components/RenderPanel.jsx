@@ -1,12 +1,20 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/prop-types */
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import PrimitiveType from "./render_components/PrimitiveType";
 import ArrayType from "./render_components/ArrayType";
 import PrimitiveHeap from "./render_components/PrimitiveHeap";
 
-const RenderPanel = ({ closePanel, setProgress, traceResult }) => {
+const RenderPanel = ({ closePanel, setProgress, traceResult, setCurrentLine }) => {
   const [step, setStep] = useState(0);
   const [showAddresses, setShowAddresses] = useState(false);
+
+  useEffect(() => {
+    if (traceResult[step]) {
+      setCurrentLine(parseInt(traceResult[step].line));
+    }
+  }, [step]);
+  
 
   return (
     <div className="flex h-full w-3/5 flex-col border-l border-l-light-platinum dark:border-l-dark-charcoal">
