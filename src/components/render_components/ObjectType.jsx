@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import * as Separator from "@radix-ui/react-separator";
 
-const ObjectHeap = ({ dataType, name, members, address, showAddress }) => {
+const ObjectType = ({ dataType, name, members, address, showAddress }) => {
   return (
     <div className="flex w-max select-none items-center rounded-xl bg-light-azureblue p-2 text-light-white dark:bg-dark-ferngreen dark:text-dark-frenchgray">
       <div className="flex flex-col items-center">
@@ -52,4 +52,4 @@ const ObjectHeap = ({ dataType, name, members, address, showAddress }) => {
   );
 };
 
-export default ObjectHeap;
+export default ObjectType;

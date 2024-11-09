@@ -5,6 +5,7 @@ import PrimitiveType from "./render_components/PrimitiveType";
 import ArrayType from "./render_components/ArrayType";
 import PrimitiveHeap from "./render_components/PrimitiveHeap";
 import ObjectHeap from "./render_components/ObjectHeap";
+import ObjectType from "./render_components/ObjectType";
 
 const RenderPanel = ({
   closePanel,
@@ -15,7 +16,10 @@ const RenderPanel = ({
   const [step, setStep] = useState(0);
   const [showAddresses, setShowAddresses] = useState(false);
 
-  const primitiveTypes = ["char", "int", "long", "float", "double"];
+  const primitiveRegex = /^(int|float|char|double|long|short|bool|void)$/;
+  const objectRegex = /^[a-zA-Z][a-zA-Z0-9_]*$/;
+  const pointerRegex = /^[a-zA-Z_][a-zA-Z0-9_]*\s*\*+$/;
+  const arrayRegex = /^[a-zA-Z_][a-zA-Z0-9_]* \[(\d+)\]$/;
 
   useEffect(() => {
     if (traceResult[step]) {
@@ -200,16 +204,7 @@ const RenderPanel = ({
                       {"()"}
                     </h2>
                     {frame.local_variables.map((variable, varIndex) =>
-                      Array.isArray(variable.value) ? (
-                        <ArrayType
-                          key={varIndex}
-                          dataType={variable.data_type}
-                          name={variable.name}
-                          values={variable.value}
-                          address={variable.address}
-                          showAddress={showAddresses}
-                        />
-                      ) : (
+                      primitiveRegex.test(variable.data_type) ? (
                         <PrimitiveType
                           key={varIndex}
                           dataType={variable.data_type}
@@ -218,6 +213,35 @@ const RenderPanel = ({
                           address={variable.address}
                           showAddress={showAddresses}
                         />
+                      ) : arrayRegex.test(variable.data_type) ? (
+                        <ArrayType
+                          key={varIndex}
+                          dataType={variable.data_type}
+                          name={variable.name}
+                          values={variable.value}
+                          address={variable.address}
+                          showAddress={showAddresses}
+                        />
+                      ) : pointerRegex.test(variable.data_type) ? (
+                        <PrimitiveType
+                          key={varIndex}
+                          dataType={variable.data_type}
+                          name={variable.name}
+                          value={variable.value}
+                          address={variable.address}
+                          showAddress={showAddresses}
+                        />
+                      ) : objectRegex.test(variable.data_type) ? (
+                        <ObjectType
+                          key={varIndex}
+                          dataType={variable.data_type}
+                          name={variable.name}
+                          members={variable.value}
+                          address={variable.address}
+                          showAddress={showAddresses}
+                        />
+                      ) : (
+                        <></>
                       ),
                     )}
                   </div>
@@ -231,7 +255,15 @@ const RenderPanel = ({
                       key={heapIndex}
                       className="flex flex-col gap-2 rounded-lg bg-light-platinum p-2 dark:bg-dark-charcoal"
                     >
-                      {!primitiveTypes.includes(data[0]) ? (
+                      {primitiveRegex.test(data[0]) ? (
+                        <PrimitiveHeap
+                          dataType={data[0]}
+                          name={""}
+                          value={data[1][2]}
+                          address={address}
+                          showAddress={showAddresses}
+                        />
+                      ) : objectRegex.test(data[0]) ? (
                         <ObjectHeap
                           dataType={data[0]}
                           name={""}
@@ -240,13 +272,7 @@ const RenderPanel = ({
                           showAddress={showAddresses}
                         />
                       ) : (
-                        <PrimitiveHeap
-                          dataType={data[0]}
-                          name={""}
-                          value={data[1][2]}
-                          address={address}
-                          showAddress={showAddresses}
-                        />
+                        <></>
                       )}
                     </div>
                   ),
