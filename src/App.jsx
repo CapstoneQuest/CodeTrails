@@ -17,15 +17,20 @@ function App() {
 
   const [httpProgress, setHttpProgress] = useState(0);
 
+  const [projectInfo, setProjectInfo] = useState(null);
+
   const [sourceCode, setSourceCode] = useState("//Welcome to CodeTrails!");
   const [userInputs, setUserInputs] = useState("");
   const [compileResult, setCompileResult] = useState({});
   const [uploadResult, setUploadResult] = useState(null);
   const [traceResult, setTraceResult] = useState({});
 
+  const [disableButton, setDisableButton] = useState(false);
+  const [action, setAction] = useState(null);
+
   const [line, setLine] = useState(null);
 
-  console.log(userInputs)
+  console.log(userInputs);
 
   const fileInputRef = useRef(null);
 
@@ -51,21 +56,29 @@ function App() {
 
   function handleCompileRequest() {
     setHttpProgress(20);
+    setDisableButton(true);
+    setAction("compiling");
     api
       .post("/compile", { sourceCode: sourceCode, stdin: userInputs })
       .then((response) => {
         setCompileResult(response.data);
         setHttpProgress(100);
         setActivePanel("output");
+        setDisableButton(false);
+        setAction(null)
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
         setHttpProgress(0);
+        setDisableButton(false);
+        setAction(null)
       });
   }
 
   function handleVisualizeRequest() {
     setHttpProgress(5);
+    setDisableButton(true);
+    setAction("generatingTrace")
     api
       .post("/generate-trace", { sourceCode: sourceCode })
       .then((response) => {
@@ -78,10 +91,14 @@ function App() {
           setHttpProgress(100);
           setActivePanel("render");
         }
+        setDisableButton(false);
+        setAction(null)
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
         setHttpProgress(0);
+        setDisableButton(false);
+        setAction(null)
       });
   }
 
@@ -113,6 +130,13 @@ function App() {
       .catch((error) => console.error("Error fetching data:", error));
   }
 
+  function handleGetProjectInfo() {
+    api
+      .get("/about")
+      .then((response) => setProjectInfo(response.data))
+      .catch((error) => console.log("Error fetching data:", error));
+  }
+
   return (
     <div className="flex h-screen flex-col bg-light-white text-light-spacegray dark:bg-dark-gunmetal dark:text-dark-frenchgray">
       <Menubar
@@ -127,6 +151,9 @@ function App() {
         doUpload={handleUploadRequest}
         input={userInputs}
         setInput={setUserInputs}
+        getInfo={handleGetProjectInfo}
+        disableButton={disableButton}
+        action={action}
       />
       <input
         type="file"

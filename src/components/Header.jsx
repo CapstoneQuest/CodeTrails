@@ -17,6 +17,9 @@ const Menubar = ({
   doUpload,
   input,
   setInput,
+  getInfo,
+  disableButton,
+  action,
 }) => {
   const [activeTheme, setActiveTheme] = useState("light");
 
@@ -80,8 +83,11 @@ const Menubar = ({
       <div className="flex gap-2 lg:gap-3">
         <Dialog.Root>
           <Dialog.Trigger asChild>
-            <Toolbar.Button className="h-auto flex-shrink-0 flex-grow-0 items-center justify-center rounded-full bg-light-azureblue px-2.5 font-mono text-white hover:bg-light-cornflowerblue dark:bg-dark-ferngreen dark:hover:bg-dark-pigmentgreen lg:px-3 xl:px-4 2xl:px-5">
-              Compile & Run
+            <Toolbar.Button
+              disabled={disableButton}
+              className="h-auto flex-shrink-0 flex-grow-0 items-center justify-center rounded-full bg-light-azureblue px-2.5 font-mono text-white hover:bg-light-cornflowerblue disabled:cursor-not-allowed disabled:bg-light-spacegray dark:bg-dark-ferngreen dark:hover:bg-dark-pigmentgreen dark:disabled:bg-dark-charcoal lg:px-3 xl:px-4 2xl:px-5"
+            >
+              {action === "compiling" ? "Compiling..." : "Compile"}
             </Toolbar.Button>
           </Dialog.Trigger>
           <Dialog.Portal>
@@ -120,9 +126,10 @@ const Menubar = ({
         </Dialog.Root>
         <Toolbar.Button
           onClick={doVisualize}
-          className="h-auto flex-shrink-0 flex-grow-0 items-center justify-center rounded-full bg-light-azureblue px-2.5 font-mono text-white hover:bg-light-cornflowerblue dark:bg-dark-ferngreen dark:hover:bg-dark-pigmentgreen lg:px-3 xl:px-4 2xl:px-5"
+          disabled={disableButton}
+          className="h-auto flex-shrink-0 flex-grow-0 items-center justify-center rounded-full bg-light-azureblue px-2.5 font-mono text-white hover:bg-light-cornflowerblue disabled:cursor-not-allowed disabled:bg-light-spacegray dark:bg-dark-ferngreen dark:hover:bg-dark-pigmentgreen dark:disabled:bg-dark-charcoal lg:px-3 xl:px-4 2xl:px-5"
         >
-          Visualize
+          {action === "generatingTrace" ? "Generating trace..." : "Visualize"}
         </Toolbar.Button>
       </div>
 
@@ -470,6 +477,12 @@ const Menubar = ({
                   clipRule="evenodd"
                 ></path>
               </svg>
+            </DropdownMenu.Item>
+            <DropdownMenu.Item
+              onClick={getInfo}
+              className="flex h-auto select-none items-center rounded-md py-1 pl-4 pr-2 text-sm text-light-spacegray data-[highlighted]:bg-light-cornflowerblue data-[highlighted]:text-light-white dark:text-dark-frenchgray dark:data-[highlighted]:bg-dark-ferngreen dark:data-[highlighted]:text-dark-frenchgray"
+            >
+              About
             </DropdownMenu.Item>
           </DropdownMenu.Content>
         </DropdownMenu.Portal>
