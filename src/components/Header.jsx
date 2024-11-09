@@ -2,6 +2,7 @@
 import * as Toolbar from "@radix-ui/react-toolbar";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import * as Progress from "@radix-ui/react-progress";
+import * as Dialog from "@radix-ui/react-dialog";
 import { useState } from "react";
 
 const Menubar = ({
@@ -14,6 +15,8 @@ const Menubar = ({
   doVisualize,
   doDownload,
   doUpload,
+  input,
+  setInput,
 }) => {
   const [activeTheme, setActiveTheme] = useState("light");
 
@@ -44,6 +47,10 @@ const Menubar = ({
     setFontLigatures(value);
   };
 
+  const handleInputChange = (e) => {
+    setInput(e.target.value);
+  };
+
   return (
     <Toolbar.Root className="flex w-full flex-nowrap border-b border-light-platinum bg-light-white p-2 px-4 text-lg dark:border-dark-charcoal dark:bg-dark-gunmetal lg:text-xs xl:text-xs 2xl:text-sm">
       {/* :::::::::::: LOGO :::::::::::: */}
@@ -71,12 +78,46 @@ const Menubar = ({
 
       {/* :::::::::::: COMPILE AND VISUALIZE BUTTONS :::::::::::: */}
       <div className="flex gap-2 lg:gap-3">
-        <Toolbar.Button
-          onClick={doCompile}
-          className="h-auto flex-shrink-0 flex-grow-0 items-center justify-center rounded-full bg-light-azureblue px-2.5 font-mono text-white hover:bg-light-cornflowerblue dark:bg-dark-ferngreen dark:hover:bg-dark-pigmentgreen lg:px-3 xl:px-4 2xl:px-5"
-        >
-          Compile & Run
-        </Toolbar.Button>
+        <Dialog.Root>
+          <Dialog.Trigger asChild>
+            <Toolbar.Button className="h-auto flex-shrink-0 flex-grow-0 items-center justify-center rounded-full bg-light-azureblue px-2.5 font-mono text-white hover:bg-light-cornflowerblue dark:bg-dark-ferngreen dark:hover:bg-dark-pigmentgreen lg:px-3 xl:px-4 2xl:px-5">
+              Compile & Run
+            </Toolbar.Button>
+          </Dialog.Trigger>
+          <Dialog.Portal>
+            <Dialog.Content className="fixed left-1/2 top-1/2 max-h-52 w-max -translate-x-1/2 -translate-y-1/2 rounded-lg border border-light-spacegray bg-light-white p-4 focus:outline-none dark:border-dark-frenchgray dark:bg-dark-gunmetal">
+              <Dialog.Title className="m-0 font-mono text-xl font-semibold text-light-azureblue dark:text-dark-ferngreen">
+                User Inputs
+              </Dialog.Title>
+              <Dialog.Description className="mb-5 mt-2.5 font-mono text-sm leading-normal text-light-spacegray dark:text-dark-frenchgray">
+                Enter space-separated values (e.g., value1 value2). Leave blank
+                if none.
+              </Dialog.Description>
+              <fieldset className="mb-4 flex items-center gap-2">
+                <input
+                  className="text-md inline-flex h-10 w-full flex-1 items-center justify-center rounded bg-light-platinum px-2.5 font-mono leading-none text-light-spacegray outline outline-2 outline-light-azureblue dark:bg-dark-charcoal dark:text-dark-frenchgray dark:outline-dark-ferngreen"
+                  id="stdin"
+                  value={input}
+                  onChange={handleInputChange}
+                  placeholder=""
+                />
+              </fieldset>
+              <div className="mt-[25px] flex justify-end">
+                <Dialog.Close asChild>
+                  <Toolbar.Button
+                    onClick={() => {
+                      doCompile();
+                      setInput("");
+                    }}
+                    className="h-8 items-center justify-center rounded-full bg-light-azureblue px-2.5 font-mono text-white hover:bg-light-cornflowerblue dark:bg-dark-ferngreen dark:hover:bg-dark-pigmentgreen lg:px-3 xl:px-4 2xl:px-5"
+                  >
+                    Compile & Run
+                  </Toolbar.Button>
+                </Dialog.Close>
+              </div>
+            </Dialog.Content>
+          </Dialog.Portal>
+        </Dialog.Root>
         <Toolbar.Button
           onClick={doVisualize}
           className="h-auto flex-shrink-0 flex-grow-0 items-center justify-center rounded-full bg-light-azureblue px-2.5 font-mono text-white hover:bg-light-cornflowerblue dark:bg-dark-ferngreen dark:hover:bg-dark-pigmentgreen lg:px-3 xl:px-4 2xl:px-5"
@@ -153,7 +194,7 @@ const Menubar = ({
       <DropdownMenu.Root>
         <DropdownMenu.Trigger asChild>
           <button
-            className="inline-flex items-center justify-center text-light-spacegray hover:text-light-cornflowerblue dark:text-dark-frenchgray dark:hover:text-dark-pigmentgreen"
+            className="inline-flex items-center justify-center rounded-full bg-transparent px-3 hover:bg-light-azureblue hover:text-light-white hover:outline-0 dark:hover:bg-dark-pigmentgreen"
             aria-label="Customise options"
           >
             Menu
@@ -161,9 +202,6 @@ const Menubar = ({
         </DropdownMenu.Trigger>
         <DropdownMenu.Portal>
           <DropdownMenu.Content className="min-w-36 rounded-md border border-light-spacegray bg-light-white p-[5px] dark:border-dark-frenchgray dark:bg-dark-gunmetal">
-            <DropdownMenu.Item className="flex h-auto select-none items-center rounded-md py-1 pl-4 pr-2 text-sm text-light-spacegray data-[highlighted]:bg-light-cornflowerblue data-[highlighted]:text-light-white dark:text-dark-frenchgray dark:data-[highlighted]:bg-dark-ferngreen dark:data-[highlighted]:text-dark-frenchgray">
-              Didn&apos;t think
-            </DropdownMenu.Item>
             <DropdownMenu.Sub>
               <DropdownMenu.SubTrigger className="flex h-auto select-none items-center rounded-md py-1 pl-4 pr-2 text-sm text-light-spacegray data-[highlighted]:bg-light-cornflowerblue data-[highlighted]:text-light-white dark:text-dark-frenchgray dark:data-[highlighted]:bg-dark-ferngreen dark:data-[highlighted]:text-dark-frenchgray">
                 Font Size
@@ -410,7 +448,28 @@ const Menubar = ({
             </DropdownMenu.CheckboxItem>
             <DropdownMenu.Separator className="m-1 h-px bg-light-spacegray dark:bg-dark-frenchgray" />
             <DropdownMenu.Item className="flex h-auto select-none items-center rounded-md py-1 pl-4 pr-2 text-sm text-light-spacegray data-[highlighted]:bg-light-cornflowerblue data-[highlighted]:text-light-white dark:text-dark-frenchgray dark:data-[highlighted]:bg-dark-ferngreen dark:data-[highlighted]:text-dark-frenchgray">
-              About
+              <a
+                href="https://github.com/orgs/CapstoneQuest/repositories"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="h-full w-full"
+              >
+                GitHub
+              </a>
+              <svg
+                width="15"
+                height="15"
+                viewBox="0 0 15 15"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M7.49933 0.25C3.49635 0.25 0.25 3.49593 0.25 7.50024C0.25 10.703 2.32715 13.4206 5.2081 14.3797C5.57084 14.446 5.70302 14.2222 5.70302 14.0299C5.70302 13.8576 5.69679 13.4019 5.69323 12.797C3.67661 13.235 3.25112 11.825 3.25112 11.825C2.92132 10.9874 2.44599 10.7644 2.44599 10.7644C1.78773 10.3149 2.49584 10.3238 2.49584 10.3238C3.22353 10.375 3.60629 11.0711 3.60629 11.0711C4.25298 12.1788 5.30335 11.8588 5.71638 11.6732C5.78225 11.205 5.96962 10.8854 6.17658 10.7043C4.56675 10.5209 2.87415 9.89918 2.87415 7.12104C2.87415 6.32925 3.15677 5.68257 3.62053 5.17563C3.54576 4.99226 3.29697 4.25521 3.69174 3.25691C3.69174 3.25691 4.30015 3.06196 5.68522 3.99973C6.26337 3.83906 6.8838 3.75895 7.50022 3.75583C8.1162 3.75895 8.73619 3.83906 9.31523 3.99973C10.6994 3.06196 11.3069 3.25691 11.3069 3.25691C11.7026 4.25521 11.4538 4.99226 11.3795 5.17563C11.8441 5.68257 12.1245 6.32925 12.1245 7.12104C12.1245 9.9063 10.4292 10.5192 8.81452 10.6985C9.07444 10.9224 9.30633 11.3648 9.30633 12.0413C9.30633 13.0102 9.29742 13.7922 9.29742 14.0299C9.29742 14.2239 9.42828 14.4496 9.79591 14.3788C12.6746 13.4179 14.75 10.7025 14.75 7.50024C14.75 3.49593 11.5036 0.25 7.49933 0.25Z"
+                  fill="currentColor"
+                  fillRule="evenodd"
+                  clipRule="evenodd"
+                ></path>
+              </svg>
             </DropdownMenu.Item>
           </DropdownMenu.Content>
         </DropdownMenu.Portal>

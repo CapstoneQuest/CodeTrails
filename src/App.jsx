@@ -18,11 +18,14 @@ function App() {
   const [httpProgress, setHttpProgress] = useState(0);
 
   const [sourceCode, setSourceCode] = useState("//Welcome to CodeTrails!");
+  const [userInputs, setUserInputs] = useState("");
   const [compileResult, setCompileResult] = useState({});
   const [uploadResult, setUploadResult] = useState(null);
   const [traceResult, setTraceResult] = useState({});
 
   const [line, setLine] = useState(null);
+
+  console.log(userInputs)
 
   const fileInputRef = useRef(null);
 
@@ -49,7 +52,7 @@ function App() {
   function handleCompileRequest() {
     setHttpProgress(20);
     api
-      .post("/compile", { sourceCode: sourceCode, stdin: "" })
+      .post("/compile", { sourceCode: sourceCode, stdin: userInputs })
       .then((response) => {
         setCompileResult(response.data);
         setHttpProgress(100);
@@ -122,6 +125,8 @@ function App() {
         doVisualize={handleVisualizeRequest}
         doDownload={handleDownloadRequest}
         doUpload={handleUploadRequest}
+        input={userInputs}
+        setInput={setUserInputs}
       />
       <input
         type="file"
