@@ -66,9 +66,15 @@ function App() {
     api
       .post("/generate-trace", { sourceCode: sourceCode })
       .then((response) => {
-        setTraceResult(response.data);
-        setHttpProgress(100);
-        setActivePanel("render");
+        if (response.data.status === 1) {
+          setCompileResult(response.data);
+          setHttpProgress(100);
+          setActivePanel("output");
+        } else {
+          setTraceResult(response.data);
+          setHttpProgress(100);
+          setActivePanel("render");
+        }
       })
       .catch((error) => {
         console.error("Error fetching data:", error);

@@ -30,9 +30,9 @@ const OutputPanel = ({ closePanel, setProgress, outputContent }) => {
       <div className="relative flex-1">
         <div className="absolute inset-0 overflow-y-auto bg-light-white dark:bg-dark-gunmetal">
           <div
-            className={`${outputContent.exit_code !== 0 ? "text-red-600" : ""} whitespace-pre-wrap p-5 font-mono`}
+            className={`${outputContent.status !== 0 ? "text-red-600" : ""} whitespace-pre-wrap p-5 font-mono`}
           >
-            {outputContent.exit_code === 0
+            {outputContent.status === 0
               ? outputContent.stdout
               : outputContent.stderr}
           </div>
