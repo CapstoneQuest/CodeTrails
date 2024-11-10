@@ -85,7 +85,7 @@ const Menubar = ({
           <Dialog.Trigger asChild>
             <Toolbar.Button
               disabled={disableButton}
-              className="h-auto flex-shrink-0 flex-grow-0 items-center justify-center rounded-full bg-light-azureblue px-2.5 font-mono text-white hover:bg-light-cornflowerblue disabled:cursor-not-allowed disabled:bg-light-spacegray dark:bg-dark-ferngreen dark:hover:bg-dark-pigmentgreen dark:disabled:bg-dark-charcoal lg:px-3 xl:px-4 2xl:px-5"
+              className="h-auto flex-shrink-0 flex-grow-0 items-center justify-center rounded-full bg-light-azureblue px-2.5 font-mono text-white hover:bg-light-cornflowerblue disabled:cursor-wait disabled:bg-light-spacegray dark:bg-dark-ferngreen dark:hover:bg-dark-pigmentgreen dark:disabled:bg-dark-charcoal lg:px-3 xl:px-4 2xl:px-5"
             >
               {action === "compiling" ? "Compiling..." : "Compile"}
             </Toolbar.Button>
@@ -127,7 +127,7 @@ const Menubar = ({
         <Toolbar.Button
           onClick={doVisualize}
           disabled={disableButton}
-          className="h-auto flex-shrink-0 flex-grow-0 items-center justify-center rounded-full bg-light-azureblue px-2.5 font-mono text-white hover:bg-light-cornflowerblue disabled:cursor-not-allowed disabled:bg-light-spacegray dark:bg-dark-ferngreen dark:hover:bg-dark-pigmentgreen dark:disabled:bg-dark-charcoal lg:px-3 xl:px-4 2xl:px-5"
+          className="h-auto flex-shrink-0 flex-grow-0 items-center justify-center rounded-full bg-light-azureblue px-2.5 font-mono text-white hover:bg-light-cornflowerblue disabled:cursor-wait disabled:bg-light-spacegray dark:bg-dark-ferngreen dark:hover:bg-dark-pigmentgreen dark:disabled:bg-dark-charcoal lg:px-3 xl:px-4 2xl:px-5"
         >
           {action === "generatingTrace" ? "Generating trace..." : "Visualize"}
         </Toolbar.Button>

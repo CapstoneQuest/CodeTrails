@@ -19,6 +19,7 @@ const RenderPanel = ({
   const primitiveRegex = /^(int|float|char|double|long|short|bool|void)$/;
   const objectRegex = /^[a-zA-Z][a-zA-Z0-9_]*$/;
   const pointerRegex = /^[a-zA-Z_][a-zA-Z0-9_]*\s*\*+$/;
+  const referenceRegex = /^[a-zA-Z_][a-zA-Z0-9_]*\s*\&+$/;
   const arrayRegex = /^[a-zA-Z_][a-zA-Z0-9_]* \[(\d+)\]$/;
 
   useEffect(() => {
@@ -240,9 +241,18 @@ const RenderPanel = ({
                           address={variable.address}
                           showAddress={showAddresses}
                         />
+                      ) : referenceRegex.test(variable.data_type) ? (
+                        <PrimitiveType
+                          key={varIndex}
+                          dataType={variable.data_type}
+                          name={variable.name}
+                          value={variable.value}
+                          address={variable.address}
+                          showAddress={showAddresses}
+                        />
                       ) : (
                         <></>
-                      ),
+                      )
                     )}
                   </div>
                 ))}
@@ -275,7 +285,7 @@ const RenderPanel = ({
                         <></>
                       )}
                     </div>
-                  ),
+                  )
                 )}
               </div>
             </div>
